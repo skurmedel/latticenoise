@@ -27,7 +27,8 @@
 	either expressed or implied, of the FreeBSD Project.
 */
 
-/**
+/** \file
+
 	latticenoise.h
 
 	This file contains various methods for generating and rendering procedural 
@@ -48,13 +49,13 @@ struct ln_lattice_s
 	/* NOTE:	DO NOT TOUCH THESE VALUES AFTER THE LATTICE HAS BEEN CONSTRUCTED.
 				IT WILL PROBABLY BLOW UP YOUR PROGRAM. */
 
-	/* The actual values. */
+	/** The actual values. */
 	float *values;
-	/* 
+	/** 
 		The size of the lattice.
 	*/ 
 	int size;
-	/*
+	/**
 		The value that was used to seed the RNG upon construction of the lattice.
 	*/
 	int seed;
@@ -64,7 +65,7 @@ typedef ln_lattice_s *ln_lattice;
 
 // POINT TYPE.
 
-/*
+/**
 	Represents a three dimensional point in space.
 */
 typedef struct point_s
@@ -72,16 +73,14 @@ typedef struct point_s
 	float x, y, z;
 } point;
 
-/*
+/**
 	A simple vector addition.
 
-	Returns:
-
-		(point){ p1.x + p2.x, p1.y + p2.y, p1.z + p2.z }
+	\return			(point){ p1.x + p2.x, p1.y + p2.y, p1.z + p2.z }
 */
 #define point_add(p1, p2) ((point){p1.x + p2.x, p1.y + p2.y, p1.z + p2.z})
 
-/*
+/**
 	Prints a point to console, purely for debugging purposes.
 
 	No newline is written.
@@ -90,37 +89,30 @@ typedef struct point_s
 
 // LATTICE FUNCTIONS.
 
-/*
+/**
 	Creates a new lattice.
 
-	size:
+	\param	size	The size of the lattice. It must be >= 1.
 
-		The size of the lattice. It must be >= 1.
+	\param	seed 	A seed value for the RNG used to initialize the lattice.
+					It is optional and may be set to 0, if so the function seeds 
+					the RNG itself.
 
-	seed:
-
-		A seed value for the RNG used to initialize the lattice.
-
-		It is optional and may be set to 0, if so the function seeds the RNG itself.
-
-	Returns:
-
-		A new lattice object on success.
-
-		NULL if:
-			size < 1
-			size memory could not be allocated (out of memory.)
+	\return 		A new lattice object on success.
+			 		NULL if:
+						size < 1
+						size memory could not be allocated (out of memory.)
 
 */
 extern ln_lattice ln_lattice_new(int size, int seed);
 
-/*
+/**
 	Frees an allocated lattice. You should always call
 	this when you are done with your lattice.
 */
 extern void ln_lattice_free(ln_lattice lattice);
 
-/*
+/**
 	Gets a value from the lattice.
 
 	It permutes the index with a special permutation table to increase visual 
