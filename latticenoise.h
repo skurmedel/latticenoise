@@ -121,15 +121,17 @@ extern ln_lattice ln_lattice_new(int size, int seed);
 extern void ln_lattice_free(ln_lattice lattice);
 
 /*
-	Gets a value from the lattice at the specified index.
+	Gets a value from the lattice.
 
 	It permutes the index with a special permutation table to increase visual 
 	quality and makes sure it's within bounds.
 
-	As a result, any integer will produce a value.
+	As a result, any integer will produce a value. It will not be a mapping to the
+	exact index specified.
 
 	If you want to get the actual value at some index, you'll have to manually 
 	access the values-array stored in the lattice.
 */
 extern float ln_lattice_value(ln_lattice lattice, int index);
 
+extern float ln_lattice_2dvalue(ln_lattice lattice, point p);
