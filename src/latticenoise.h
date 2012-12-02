@@ -39,31 +39,55 @@
 */
 
 /**
-	Represents a lattice of random values. It contains the actual lattice as well
-	as various metadata.
-
-	The lattice is one-dimensional.
+	Represents a noise lattice.
 */
 struct ln_lattice_s
 {
-	/* NOTE:	DO NOT TOUCH THESE VALUES AFTER THE LATTICE HAS BEEN CONSTRUCTED.
-				IT WILL PROBABLY BLOW UP YOUR PROGRAM. */
+	/* 
+		NOTE:	PLEASE DO NOT TOUCH THESE VALUES MANUALLY, UNLESS YOU ABSOLUTELY 
+				KNOW WHAT YOU ARE DOING.
+	*/
 
-	/** The actual values. */
+	/**
+		The actual values of the lattice.
+
+		The memory layout of this array is as follows for an n-dimensional lattice:
+ 
+			dim_length many floats for dimension 1
+			dim_length many floats for dimension 2
+			...
+			dim_length many floats for dimension n
+
+		To find the first value for one axle n: dim_length * (n - 1)
+	*/
 	float *values;
+
 	/** 
-		The size of the lattice.
+		The length of one side of the lattice. The lattice will always be square,
+		cubic etc.
+
+		This value can always be used to index into one dimension of the lattice, 
+		like so: index = val & my_lattice.length;
 	*/ 
-	int size;
+	unsigned int dim_length;
+	/**
+		Total number of values in the lattice, equal to pow(dim_length, n) where
+		n is the number of dimensions of the lattice.
+	*/ 
+	unsigned int size;
 	/**
 		The value that was used to seed the RNG upon construction of the lattice.
 	*/
 	int seed;
+	/**
+		The number of dimensions in the lattice.
+	*/
+	unsigned short dimensions;
 };
 
 typedef ln_lattice_s *ln_lattice;
 
-// POINT TYPE.
+// point3 TYPE.
 
 /**
 	Represents a three dimensional point in space.
@@ -71,21 +95,21 @@ typedef ln_lattice_s *ln_lattice;
 typedef struct point_s
 {
 	float x, y, z;
-} point;
+} point3;
 
 /**
 	A simple vector addition.
 
-	\return			(point){ p1.x + p2.x, p1.y + p2.y, p1.z + p2.z }
+	\return			(point3){ p1.x + p2.x, p1.y + p2.y, p1.z + p2.z }
 */
-#define point_add(p1, p2) ((point){p1.x + p2.x, p1.y + p2.y, p1.z + p2.z})
+#define point3_add(p1, p2) ((point3){p1.x + p2.x, p1.y + p2.y, p1.z + p2.z})
 
 /**
-	Prints a point to console, purely for debugging purposes.
+	Prints a point3 to console, purely for debugging purposes.
 
 	No newline is written.
 */
-#define point_print(p1) printf("<%0.5f, %0.5f, %0.5f>", p1.x, p1.y, p1.z)
+#define point3_print(p1) printf("<%0.5f, %0.5f, %0.5f>", p1.x, p1.y, p1.z)
 
 // LATTICE FUNCTIONS.
 
@@ -126,4 +150,40 @@ extern void ln_lattice_free(ln_lattice lattice);
 */
 extern float ln_lattice_value(ln_lattice lattice, int index);
 
-extern float ln_lattice_2dvalue(ln_lattice lattice, point p);
+/**
+	Represents an interpolation technique for a 2D point.
+
+	The components of p will be normalised to [0.0, 1.0).
+*/
+typedef float (*ln_interpolator2d)(
+	ln_lattice lattice, 
+	point3 p);
+
+
+
+/**
+	Gets a value from the lattice for point p.
+
+	This function treats p as a 2D point and discards Z in the calculations.
+	
+	\param	p 		A point3 space to calculate a value from.
+	\param	interp 	A 2D interpolator function.
+	\return			A value interpolated between 4 lattice points.
+*/
+extern float ln_lattice_2dvalue(
+	ln_lattice lattice, 
+	point3 p, 
+	ln_interpolator2d interp);
+
+
+
+
+
+
+
+
+
+
+
+
+
