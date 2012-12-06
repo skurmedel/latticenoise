@@ -51,12 +51,9 @@ struct ln_lattice_s
 	/**
 		The actual values of the lattice.
 
-		The memory layout of this array is as follows for an n-dimensional lattice:
+		The memory layout of this array is as follows for an 3-dimensional lattice:
  
-			dim_length many floats for dimension 1
-			dim_length many floats for dimension 2
-			...
-			dim_length many floats for dimension n
+			[x0y0z0, ..., xny0z0][x0y1z0, ..., x0ynz0][x0y0z1, ..., x0y0zn]...
 
 		To find the first value for one axle n: dim_length * (n - 1)
 	*/
@@ -114,9 +111,14 @@ typedef struct point_s
 // LATTICE FUNCTIONS.
 
 /**
-	Creates a new lattice.
+	Creates a new lattice, allocates the memory needed and feeds it with values.
+	
+	\param	dimensions
+					How many dimensions the lattice has. It must be >= 1.
+	\param	dim_length	
+					The size in one dimension of the lattice. It must be >= 1.
 
-	\param	size	The size of the lattice. It must be >= 1.
+					The total size is pow(dim_length, dimensions).
 
 	\param	seed 	A seed value for the RNG used to initialize the lattice.
 					It is optional and may be set to 0, if so the function seeds 
@@ -124,8 +126,9 @@ typedef struct point_s
 
 	\return 		A new lattice object on success.
 			 		NULL if:
-						size < 1
-						size memory could not be allocated (out of memory.)
+			 			dimensions < 1
+						dim_length < 1
+						memory could not be allocated (out of memory.)
 
 */
 extern ln_lattice ln_lattice_new(int size, int seed);
@@ -137,52 +140,30 @@ extern ln_lattice ln_lattice_new(int size, int seed);
 extern void ln_lattice_free(ln_lattice lattice);
 
 /**
-	Gets a value from the lattice.
+	Gets value from the lattice.
 
-	It permutes the index with a special permutation table to increase visual 
+	It permutes the index with a special permutation table to increase visual )
 	quality and makes sure it's within bounds.
 
 	As a result, any integer will produce a value. It will not be a mapping to the
 	exact index specified.
 
 	If you want to get the actual value at some index, you'll have to manually 
-	access the values-array stored in the lattice.
-*/
-extern float ln_lattice_value(ln_lattice lattice, int index);
-
-/**
-	Represents an interpolation technique for a 2D point.
-
-	The components of p will be normalised to [0.0, 1.0).
-*/
-typedef float (*ln_interpolator2d)(
-	ln_lattice lattice, 
-	point3 p);
-
-
-
-/**
-	Gets a value from the lattice for point p.
-
-	This function treats p as a 2D point and discards Z in the calculations.
+	(access the values-array stored in the lattice.
 	
-	\param	p 		A point3 space to calculate a value from.
-	\param	interp 	A 2D interpolator function.
-	\return			A value interpolated between 4 lattice points.
-*/
-extern float ln_lattice_2dvalue(
-	ln_lattice lattice, 
-	point3 p, 
-	ln_interpolator2d interp);
-
-
-
-
-
-
-
-
-
+		The parameters and return values are equivalent to those of:
+			ln_lattice_value
+	*/
+	extern float ln_lattice_perm_value(ln_lattice lattice, unsigned short dim, unsigned int index);
+	
+	/**
+		Gets a value from the lattice.
+	
+		\param 	dim 	The dimension to get t
+	extern float ln_lattice_value(ln_lattice lattice, unsigned short dim, unsigned int index);
+	
+	
+	(z * 3) * (y * 2) + x
 
 
 
