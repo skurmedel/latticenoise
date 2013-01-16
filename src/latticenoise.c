@@ -123,3 +123,64 @@ die_clean:
 
 	return lattice;
 }
+
+float ln_lattice_value1(
+	ln_lattice lattice, 
+	unsigned int x)
+{
+	if (lattice == NULL || lattice->dimensions != 1 || x > lattice->size - 1)
+		return INFINITY;
+	return lattice->values[x];
+}
+
+float ln_lattice_value2(
+	ln_lattice lattice, 
+	unsigned int x,
+	unsigned int y)
+{
+	if (lattice == NULL 
+		|| lattice->dimensions != 2 
+		|| x >= lattice->dim_length
+		|| y >= lattice->dim_length)
+		return INFINITY;
+	return lattice->values[(y * lattice->dim_length) + x];
+}
+
+float ln_lattice_value3(
+	ln_lattice lattice, 
+	unsigned int x,
+	unsigned int y,
+	unsigned int z)
+{
+	if (lattice == NULL 
+		|| lattice->dimensions != 2 
+		|| x >= lattice->dim_length
+		|| y >= lattice->dim_length
+		|| z >= lattice->dim_length)
+		return INFINITY;
+	return lattice->values[
+		  (z * lattice->dim_length * lattice->dim_length) 
+		+ (y * lattice->dim_length) 
+		+ x];
+}
+
+float ln_lattice_value4(
+	ln_lattice lattice, 
+	unsigned int x,
+	unsigned int y,
+	unsigned int z,
+	unsigned int w)
+{
+	if (lattice == NULL 
+		|| lattice->dimensions != 2 
+		|| x >= lattice->dim_length
+		|| y >= lattice->dim_length
+		|| z >= lattice->dim_length
+		|| w >= lattice->dim_length)
+		return INFINITY;
+	return lattice->values[
+		  (w * lattice->dim_length * lattice->dim_length * lattice->dim_length) 
+		+ (z * lattice->dim_length * lattice->dim_length) 
+		+ (y * lattice->dim_length) 
+		+ x];
+}

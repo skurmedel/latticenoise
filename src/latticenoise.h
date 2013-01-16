@@ -59,6 +59,8 @@ struct ln_lattice_s
 				q = q * m * m * m * m
 				return lattice.values[x + y + z + w + q]
 
+		Where m is the dim_length value of ln_lattice.
+
 	*/
 	float *values;
 
