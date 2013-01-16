@@ -6,7 +6,7 @@ A small C library and executable for generating procedural textures.
 Current Status
 --------------
 
-There is functions for creating and destroying a lattice, and retrieving raw values
+There are functions for creating and destroying a lattice, and retrieving raw values
 from it in 1D, 2D, 3D and 4D. It lacks support for arbitrary floating point 
 coordinates with interpolation, but it is on the way.
 
