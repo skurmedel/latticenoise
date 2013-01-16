@@ -38,6 +38,10 @@
 #include "stdio.h"
 #include "stdlib.h"
 
+#include "math.h"
+
+#include "latticenoise.h"
+
 typedef struct tga_data_s
 {
 	/* 
@@ -166,9 +170,63 @@ static void tga_test()
 	fclose(f);
 }
 
+static void test_write_lattice(ln_lattice lattice)
+{
+	if (lattice->dimensions != 2)
+	{
+		puts("Dimensions is not 2.\n");
+		goto die_horribly;
+	}
+
+	if (lattice->dim_length > 65535)
+	{
+		puts("dim_length can't be larger than 2^16-1.\n");
+		goto die_horribly;
+	}
+
+	tga_data *tga = tga_create(lattice->dim_length, lattice->dim_length, 24);
+	if (tga == NULL)
+	{
+		puts("Memory exhausted. Good Bye.\n");
+		goto die_horribly;
+	}
+
+	uint64_t len = tga_len(tga->width, tga->height, tga->bitdepth);
+
+	for (uint64_t i = 0; i < len; i += 3)
+	{
+		uint32_t x = (i / 3) % lattice->dim_length;
+		uint32_t y = (i / 3) / lattice->dim_length;
+		float v = ln_lattice_value2(lattice, x, y);
+		if (v == INFINITY)
+			puts("BUG! We hit INFINITY!");
+		uint8_t bv = (uint8_t) (v * 255.9);
+
+		tga->data[i] = bv;
+		tga->data[i + 1] = bv;
+		tga->data[i + 2] = bv;
+	}
+
+	FILE *f = fopen("test.tga", "wb");
+
+	tga_write(tga, f);
+
+	tga_free(tga);
+
+	fclose(f);
+
+	return;
+
+die_horribly:
+	ln_lattice_free(lattice);
+	abort();
+}
+
 int main(int argc, char *argv[])
 {
-	tga_test();
+	ln_lattice lattice = ln_lattice_new(2, 128, NULL);
+	test_write_lattice(lattice);
+	ln_lattice_free(lattice);
 
 	return 0;
 }
