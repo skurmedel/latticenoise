@@ -15,6 +15,9 @@ ln_rng_func_def_s \-
 .RI "float(* \fBfunc\fP )(void *state)"
 .br
 .ti -1c
+.RI "unsigned long \fBseed\fP"
+.br
+.ti -1c
 .RI "void * \fBstate\fP"
 .br
 .in -1c
@@ -32,6 +35,8 @@ a value between 0\&.0 and 1\&.0\&.
 .RE
 .PP
 
+.SS "unsigned long seed"
+The seed value used to initialize the RNG\&. 
 
 .SH "Author"
 .PP 

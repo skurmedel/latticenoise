@@ -75,7 +75,6 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
       <li><a href="globals.html"><span>All</span></a></li>
       <li class="current"><a href="globals_func.html"><span>Functions</span></a></li>
       <li><a href="globals_type.html"><span>Typedefs</span></a></li>
-      <li><a href="globals_defs.html"><span>Macros</span></a></li>
     </ul>
   </div>
 </div><!-- top -->
@@ -98,7 +97,7 @@ $(document).ready(function(){initNavTree('globals_func.html','');});
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Data Structures</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Typedefs</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Macros</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(8)"><span class="SelectionMark">&#160;</span>Pages</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Data Structures</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Typedefs</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Pages</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -113,19 +112,24 @@ $(document).ready(function(){initNavTree('globals_func.html','');});
 : <a class="el" href="latticenoise_8h.html#a2a52f21bd80ddb0fb314ceb6fa766a88">latticenoise.h</a>
 </li>
 <li>ln_lattice_new()
-: <a class="el" href="latticenoise_8h.html#aaf06534159637c1d6bfbdb086ea25c9d">latticenoise.h</a>
+: <a class="el" href="latticenoise_8c.html#a76f5300342229b187720643cb3724492">latticenoise.c</a>
+, <a class="el" href="latticenoise_8h.html#a76f5300342229b187720643cb3724492">latticenoise.h</a>
 </li>
 <li>ln_lattice_value1()
-: <a class="el" href="latticenoise_8h.html#ae2f84ea3b89883b2e85f15c2004ed767">latticenoise.h</a>
+: <a class="el" href="latticenoise_8c.html#ae18b2a07b6a2f9b190f72ab7b7e37448">latticenoise.c</a>
+, <a class="el" href="latticenoise_8h.html#ae18b2a07b6a2f9b190f72ab7b7e37448">latticenoise.h</a>
 </li>
 <li>ln_lattice_value2()
-: <a class="el" href="latticenoise_8h.html#ac832da8e4fe61ee4860fd7fb86c76384">latticenoise.h</a>
+: <a class="el" href="latticenoise_8h.html#a5dc1b7dc772a680b3c406cf86e4be253">latticenoise.h</a>
+, <a class="el" href="latticenoise_8c.html#a5dc1b7dc772a680b3c406cf86e4be253">latticenoise.c</a>
 </li>
 <li>ln_lattice_value3()
-: <a class="el" href="latticenoise_8h.html#a5a58ddfa0a09a8aeb4834d110747bfc1">latticenoise.h</a>
+: <a class="el" href="latticenoise_8h.html#a1fed31790325d271e74b71c142d007c5">latticenoise.h</a>
+, <a class="el" href="latticenoise_8c.html#a1fed31790325d271e74b71c142d007c5">latticenoise.c</a>
 </li>
 <li>ln_lattice_value4()
-: <a class="el" href="latticenoise_8h.html#a6aa13ddbf37349dcf6fd8baf354eca07">latticenoise.h</a>
+: <a class="el" href="latticenoise_8c.html#a743276e56f9d23dc4ba90d7e1c2f7e66">latticenoise.c</a>
+, <a class="el" href="latticenoise_8h.html#a743276e56f9d23dc4ba90d7e1c2f7e66">latticenoise.h</a>
 </li>
 </ul>
 </div><!-- contents -->
@@ -133,7 +137,7 @@ $(document).ready(function(){initNavTree('globals_func.html','');});
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Wed Jan 16 2013 04:40:42 for latticenoise by
+    <li class="footer">Generated on Wed Jan 16 2013 06:21:18 for latticenoise by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.2 </li>
   </ul>

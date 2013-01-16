@@ -21,10 +21,10 @@ ln_lattice_s \-
 .RI "unsigned int \fBsize\fP"
 .br
 .ti -1c
-.RI "int \fBseed\fP"
+.RI "unsigned long \fBseed\fP"
 .br
 .ti -1c
-.RI "unsigned short \fBdimensions\fP"
+.RI "unsigned int \fBdimensions\fP"
 .br
 .in -1c
 .SH "Detailed Description"
@@ -36,9 +36,9 @@ Represents a noise lattice\&.
 The length of one side of the lattice\&. The lattice will always be square, cubic etc\&.
 .PP
 This value can always be used to index into one dimension of the lattice, like so: index = val & my_lattice\&.length; 
-.SS "unsigned short dimensions"
+.SS "unsigned int dimensions"
 The number of dimensions in the lattice\&. 
-.SS "int seed"
+.SS "unsigned long seed"
 The value that was used to seed the RNG upon construction of the lattice\&. 
 .SS "unsigned int size"
 Total number of values in the lattice, equal to pow(dim_length, n) where n is the number of dimensions of the lattice\&. 
@@ -57,9 +57,11 @@ def val(x, y, z, w, q):
     w = w * m * m * m
     q = q * m * m * m * m
     return lattice.values[x + y + z + w + q]
+
 .fi
 .PP
- 
+.PP
+Where m is the dim_length value of ln_lattice\&. 
 
 .SH "Author"
 .PP 

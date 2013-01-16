@@ -14,6 +14,5 @@ var hierarchy =
     [ "ln_rng_func_def_s", "structln__rng__func__def__s.html", null ],
     [ "option_proxy", "structoption__proxy.html", null ],
     [ "optional_uint", "structoptional__uint.html", null ],
-    [ "parse_state", "structparse__state.html", null ],
-    [ "point_s", "structpoint__s.html", null ]
+    [ "parse_state", "structparse__state.html", null ]
 ];

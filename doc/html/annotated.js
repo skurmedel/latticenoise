@@ -10,6 +10,5 @@ var annotated =
     [ "ln_rng_func_def_s", "structln__rng__func__def__s.html", "structln__rng__func__def__s" ],
     [ "option_proxy", "structoption__proxy.html", "structoption__proxy" ],
     [ "optional_uint", "structoptional__uint.html", "structoptional__uint" ],
-    [ "parse_state", "structparse__state.html", "structparse__state" ],
-    [ "point_s", "structpoint__s.html", "structpoint__s" ]
+    [ "parse_state", "structparse__state.html", "structparse__state" ]
 ];

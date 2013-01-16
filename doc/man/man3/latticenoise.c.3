@@ -1,39 +1,27 @@
-.TH "src/latticenoise.h" 3 "Wed Jan 16 2013" "latticenoise" \" -*- nroff -*-
+.TH "src/latticenoise.c" 3 "Wed Jan 16 2013" "latticenoise" \" -*- nroff -*-
 .ad l
 .nh
 .SH NAME
-src/latticenoise.h \- 
+src/latticenoise.c \- 
 .SH SYNOPSIS
 .br
 .PP
-.SS "Data Structures"
+\fC#include 'latticenoise\&.h'\fP
+.br
+\fC#include 'math\&.h'\fP
+.br
+\fC#include 'stdlib\&.h'\fP
+.br
+\fC#include 'limits\&.h'\fP
+.br
+\fC#include 'time\&.h'\fP
+.br
 
-.in +1c
-.ti -1c
-.RI "struct \fBln_lattice_s\fP"
-.br
-.ti -1c
-.RI "struct \fBln_rng_func_def_s\fP"
-.br
-.in -1c
-.SS "Typedefs"
-
-.in +1c
-.ti -1c
-.RI "typedef struct \fBln_lattice_s\fP * \fBln_lattice\fP"
-.br
-.ti -1c
-.RI "typedef struct \fBln_rng_func_def_s\fP \fBln_rng_func_def\fP"
-.br
-.in -1c
 .SS "Functions"
 
 .in +1c
 .ti -1c
 .RI "\fBln_lattice\fP \fBln_lattice_new\fP (unsigned int dimensions, unsigned int dim_length, \fBln_rng_func_def\fP *rng_func)"
-.br
-.ti -1c
-.RI "void \fBln_lattice_free\fP (\fBln_lattice\fP lattice)"
 .br
 .ti -1c
 .RI "float \fBln_lattice_value1\fP (\fBln_lattice\fP lattice, unsigned int x)"
@@ -52,17 +40,9 @@ src/latticenoise.h \-
 .PP 
 \fBlatticenoise\&.h\fP
 .PP
-This file contains various methods for generating and rendering procedural textures based on the Lattice Noise method\&.
-.PP
-It contains common functions as well as specific implementations such as Perlin Noise and Turbulence\&. 
-.SH "Typedef Documentation"
-.PP 
-.SS "typedef struct \fBln_rng_func_def_s\fP  \fBln_rng_func_def\fP"
-Provides a custom RNG\&. 
+Main implementation\&. 
 .SH "Function Documentation"
 .PP 
-.SS "void ln_lattice_free (\fBln_lattice\fPlattice)"
-Frees an allocated lattice\&. You should always call this when you are done with your lattice\&. 
 .SS "\fBln_lattice\fP ln_lattice_new (unsigned intdimensions, unsigned intdim_length, \fBln_rng_func_def\fP *rng_func)"
 Creates a new lattice, allocates the memory needed and feeds it with values\&.
 .PP
