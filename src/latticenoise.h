@@ -42,22 +42,33 @@
 	Represents a noise lattice.
 */
 struct ln_lattice_s
-{
-	/* 
-		NOTE:	PLEASE DO NOT TOUCH THESE VALUES MANUALLY, UNLESS YOU ABSOLUTELY 
-				KNOW WHAT YOU ARE DOING.
-	*/
-
+{	
 	/**
 		The actual values of the lattice.
 
-		The memory layout of this array is as follows for an 3-dimensional lattice:
- 
-			[x0y0z0, ..., xny0z0][x0y1z0, ..., x0ynz0][x0y0z1, ..., x0y0zn]...
+		Methods are provided for accessing lattices up to 4 dimensions, but the 
+		library allows higher dimensions still.
 
-		To find the first value for one axle n: dim_length * (n - 1)
+		To access a value in a 5D library you'd calculate the final index as such:
+
+			def val(x, y, z, w, q):
+				x = x
+				y = y * m
+				z = z * m * m
+				w = w * m * m * m
+				q = q * m * m * m * m
+				return lattice.values[x + y + z + w + q]
+
 	*/
 	float *values;
+
+	/* 
+		NOTE:	PLEASE DO NOT TOUCH THESE VALUES MANUALLY, UNLESS YOU ABSOLUTELY 
+				KNOW WHAT YOU ARE DOING.
+				EVEN THEN, I'M NOT SURE YOU SHOULD TOUCH THESE. IT COULD COMPLETELY
+				BORK YOUR PROGRAM/MEMORY.
+	*/
+
 
 	/** 
 		The length of one side of the lattice. The lattice will always be square,
@@ -140,30 +151,40 @@ extern ln_lattice ln_lattice_new(int size, int seed);
 extern void ln_lattice_free(ln_lattice lattice);
 
 /**
-	Gets value from the lattice.
+	Retrieves a value from a 1D lattice.
 
-	It permutes the index with a special permutation table to increase visual )
-	quality and makes sure it's within bounds.
+	\return			The value at coordinate x in the lattice or
+					infinity if lattice.dimensions != 1 or the coordinate are
+					out of bounds.
+*/
+extern float ln_lattice_value1(ln_lattice lattice, int x);
 
-	As a result, any integer will produce a value. It will not be a mapping to the
-	exact index specified.
+/**
+	Retrieves a value from a 2D lattice.
 
-	If you want to get the actual value at some index, you'll have to manually 
-	(access the values-array stored in the lattice.
-	
-		The parameters and return values are equivalent to those of:
-			ln_lattice_value
-	*/
-	extern float ln_lattice_perm_value(ln_lattice lattice, unsigned short dim, unsigned int index);
-	
-	/**
-		Gets a value from the lattice.
-	
-		\param 	dim 	The dimension to get t
-	extern float ln_lattice_value(ln_lattice lattice, unsigned short dim, unsigned int index);
-	
-	
-	(z * 3) * (y * 2) + x
+	\return			The value at coordinates (x, y) in the lattice or
+					infinity if lattice.dimensions != 2 or the coordinates are
+					out of bounds.
+*/
+extern float ln_lattice_value2(ln_lattice lattice, int x, int y);
+
+/**
+	Retrieves a value from a 3D lattice.
+
+	\return			The value at coordinates (x, y, z) in the lattice or
+					infinity if lattice.dimensions != 3 or the coordinates are
+					out of bounds.
+*/
+extern float ln_lattice_value3(ln_lattice lattice, int x, int y, int z);
+
+/**
+	Retrieves a value from a 4D lattice.
+
+	\return			The value at coordinates (x, y, z, w) in the lattice or
+					infinity if lattice.dimensions != 4 or the coordinates are
+					out of bounds.
+*/
+extern float ln_lattice_value4(ln_lattice lattice, int x, int y, int z, int w);
 
 
 
