@@ -141,7 +141,7 @@ static void tga_write(tga_data *data, FILE *f)
 	}
 }
 
-void tga_test()
+static void tga_test()
 {
 	tga_data *tga = tga_create(128, 128, 24);
 
