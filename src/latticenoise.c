@@ -33,3 +33,5 @@
 
 	Main implementation.
 */
+
+#include "math.h"

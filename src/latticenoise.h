@@ -90,7 +90,7 @@ struct ln_lattice_s
 	/**
 		The number of dimensions in the lattice.
 	*/
-	unsigned short dimensions;
+	unsigned int dimensions;
 };
 
 typedef ln_lattice_s *ln_lattice;
@@ -134,9 +134,9 @@ typedef struct ln_rng_func_def_s
 
 */
 extern ln_lattice ln_lattice_new(
-	int dimensions, 
-	int dim_length, 
-	int seed, 
+	unsigned int dimensions, 
+	unsigned int dim_length, 
+	unsigned int seed, 
 	ln_rng_func_def rng_func);
 
 /**
@@ -152,7 +152,9 @@ extern void ln_lattice_free(ln_lattice lattice);
 					infinity if lattice.dimensions != 1 or the coordinate are
 					out of bounds.
 */
-extern float ln_lattice_value1(ln_lattice lattice, int x);
+extern float ln_lattice_value1(
+	ln_lattice lattice, 
+	unsigned int x);
 
 /**
 	Retrieves a value from a 2D lattice.
@@ -161,7 +163,10 @@ extern float ln_lattice_value1(ln_lattice lattice, int x);
 					infinity if lattice.dimensions != 2 or the coordinates are
 					out of bounds.
 */
-extern float ln_lattice_value2(ln_lattice lattice, int x, int y);
+extern float ln_lattice_value2(
+	ln_lattice lattice, 
+	unsigned int x, 
+	unsigned int y);
 
 /**
 	Retrieves a value from a 3D lattice.
@@ -170,7 +175,11 @@ extern float ln_lattice_value2(ln_lattice lattice, int x, int y);
 					infinity if lattice.dimensions != 3 or the coordinates are
 					out of bounds.
 */
-extern float ln_lattice_value3(ln_lattice lattice, int x, int y, int z);
+extern float ln_lattice_value3(
+	ln_lattice lattice, 
+	unsigned int x, 
+	unsigned int y, 
+	unsigned int z);
 
 /**
 	Retrieves a value from a 4D lattice.
@@ -179,4 +188,9 @@ extern float ln_lattice_value3(ln_lattice lattice, int x, int y, int z);
 					infinity if lattice.dimensions != 4 or the coordinates are
 					out of bounds.
 */
-extern float ln_lattice_value4(ln_lattice lattice, int x, int y, int z, int w);
+extern float ln_lattice_value4(
+	ln_lattice lattice, 
+	unsigned int x, 
+	unsigned int y, 
+	unsigned int z, 
+	unsigned int w);
