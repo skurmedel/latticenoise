@@ -70,6 +70,8 @@ ln_lattice ln_lattice_new(
 	if (dimensions < 1 || dim_length < 1)
 		return NULL;
 
+	/* We simply use a bigger datatype here and avoid lengthy overflow
+	   checks. */
 	unsigned long long size = 1;
 	for (unsigned int i; i < dimensions; i++)
 	{
