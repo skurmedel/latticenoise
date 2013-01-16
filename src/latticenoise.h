@@ -141,19 +141,14 @@ typedef struct ln_rng_func_def_s
 	\param	dimensions
 					How many dimensions the lattice has. It must be >= 1.
 	\param	dim_length	
-					The size in one dimension of the lattice. It must be >= 1.
-
-					The total size is pow(dim_length, dimensions).
-
+					The size in one dimension of the lattice. It must be >= 1. The 
+					total size is pow(dim_length, dimensions).
 	\param	seed 	A seed value for the RNG used to initialize the lattice.
 					It is optional and may be set to 0, if so the function seeds 
 					the RNG itself.
-
 	\param	rng_func
-					A pointer to a ln_rng_func_def. 
-
-					This parameter is optional, leave it to NULL to use the default
-					C RNG.
+					A pointer to a ln_rng_func_def. This parameter is optional, leave 
+					it to NULL to use the default C RNG.
 
 	\return 		A new lattice object on success.
 			 		NULL if:

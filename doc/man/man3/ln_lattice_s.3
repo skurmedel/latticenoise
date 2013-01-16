@@ -1,0 +1,66 @@
+.TH "ln_lattice_s" 3 "Wed Jan 16 2013" "latticenoise" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+ln_lattice_s \- 
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fC#include <latticenoise\&.h>\fP
+.SS "Data Fields"
+
+.in +1c
+.ti -1c
+.RI "float * \fBvalues\fP"
+.br
+.ti -1c
+.RI "unsigned int \fBdim_length\fP"
+.br
+.ti -1c
+.RI "unsigned int \fBsize\fP"
+.br
+.ti -1c
+.RI "int \fBseed\fP"
+.br
+.ti -1c
+.RI "unsigned short \fBdimensions\fP"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+Represents a noise lattice\&. 
+.SH "Field Documentation"
+.PP 
+.SS "unsigned int dim_length"
+The length of one side of the lattice\&. The lattice will always be square, cubic etc\&.
+.PP
+This value can always be used to index into one dimension of the lattice, like so: index = val & my_lattice\&.length; 
+.SS "unsigned short dimensions"
+The number of dimensions in the lattice\&. 
+.SS "int seed"
+The value that was used to seed the RNG upon construction of the lattice\&. 
+.SS "unsigned int size"
+Total number of values in the lattice, equal to pow(dim_length, n) where n is the number of dimensions of the lattice\&. 
+.SS "float* values"
+The actual values of the lattice\&.
+.PP
+Methods are provided for accessing lattices up to 4 dimensions, but the library allows higher dimensions still\&.
+.PP
+To access a value in a 5D library you'd calculate the final index as such: 
+.PP
+.nf
+def val(x, y, z, w, q):
+    x = x
+    y = y * m
+    z = z * m * m
+    w = w * m * m * m
+    q = q * m * m * m * m
+    return lattice.values[x + y + z + w + q]
+.fi
+.PP
+ 
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for latticenoise from the source code\&.

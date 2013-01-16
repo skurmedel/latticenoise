@@ -1,0 +1,157 @@
+.TH "src/latticenoise.h" 3 "Wed Jan 16 2013" "latticenoise" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+src/latticenoise.h \- 
+.SH SYNOPSIS
+.br
+.PP
+.SS "Data Structures"
+
+.in +1c
+.ti -1c
+.RI "struct \fBln_lattice_s\fP"
+.br
+.ti -1c
+.RI "struct \fBpoint_s\fP"
+.br
+.ti -1c
+.RI "struct \fBln_rng_func_def_s\fP"
+.br
+.in -1c
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBpoint3_add\fP(p1, p2)   ((\fBpoint3\fP){p1\&.x + p2\&.x, p1\&.y + p2\&.y, p1\&.z + p2\&.z})"
+.br
+.ti -1c
+.RI "#define \fBpoint3_print\fP(p1)   printf('<%0\&.5f, %0\&.5f, %0\&.5f>', p1\&.x, p1\&.y, p1\&.z)"
+.br
+.in -1c
+.SS "Typedefs"
+
+.in +1c
+.ti -1c
+.RI "typedef \fBln_lattice_s\fP * \fBln_lattice\fP"
+.br
+.ti -1c
+.RI "typedef struct \fBpoint_s\fP \fBpoint3\fP"
+.br
+.ti -1c
+.RI "typedef struct \fBln_rng_func_def_s\fP \fBln_rng_func_def\fP"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBln_lattice\fP \fBln_lattice_new\fP (int dimensions, int dim_length, int seed, \fBln_rng_func_def\fP rng_func)"
+.br
+.ti -1c
+.RI "void \fBln_lattice_free\fP (\fBln_lattice\fP lattice)"
+.br
+.ti -1c
+.RI "float \fBln_lattice_value1\fP (\fBln_lattice\fP lattice, int x)"
+.br
+.ti -1c
+.RI "float \fBln_lattice_value2\fP (\fBln_lattice\fP lattice, int x, int y)"
+.br
+.ti -1c
+.RI "float \fBln_lattice_value3\fP (\fBln_lattice\fP lattice, int x, int y, int z)"
+.br
+.ti -1c
+.RI "float \fBln_lattice_value4\fP (\fBln_lattice\fP lattice, int x, int y, int z, int w)"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+\fBlatticenoise\&.h\fP
+.PP
+This file contains various methods for generating and rendering procedural textures based on the Lattice Noise method\&.
+.PP
+It contains common functions as well as specific implementations such as Perlin Noise and Turbulence\&. 
+.SH "Macro Definition Documentation"
+.PP 
+.SS "#define point3_add(p1, p2)   ((\fBpoint3\fP){p1\&.x + p2\&.x, p1\&.y + p2\&.y, p1\&.z + p2\&.z})"
+A simple vector addition\&.
+.PP
+\fBReturns:\fP
+.RS 4
+(point3){ p1\&.x + p2\&.x, p1\&.y + p2\&.y, p1\&.z + p2\&.z } 
+.RE
+.PP
+
+.SS "#define point3_print(p1)   printf('<%0\&.5f, %0\&.5f, %0\&.5f>', p1\&.x, p1\&.y, p1\&.z)"
+Prints a point3 to console, purely for debugging purposes\&.
+.PP
+No newline is written\&. 
+.SH "Typedef Documentation"
+.PP 
+.SS "typedef struct \fBln_rng_func_def_s\fP  \fBln_rng_func_def\fP"
+Provides a custom RNG\&. 
+.SS "typedef struct \fBpoint_s\fP  \fBpoint3\fP"
+Represents a three dimensional point in space\&. 
+.SH "Function Documentation"
+.PP 
+.SS "void ln_lattice_free (\fBln_lattice\fPlattice)"
+Frees an allocated lattice\&. You should always call this when you are done with your lattice\&. 
+.SS "\fBln_lattice\fP ln_lattice_new (intdimensions, intdim_length, intseed, \fBln_rng_func_def\fPrng_func)"
+Creates a new lattice, allocates the memory needed and feeds it with values\&.
+.PP
+\fBParameters:\fP
+.RS 4
+\fIdimensions\fP How many dimensions the lattice has\&. It must be >= 1\&. 
+.br
+\fIdim_length\fP The size in one dimension of the lattice\&. It must be >= 1\&. The total size is pow(dim_length, dimensions)\&. 
+.br
+\fIseed\fP A seed value for the RNG used to initialize the lattice\&. It is optional and may be set to 0, if so the function seeds the RNG itself\&. 
+.br
+\fIrng_func\fP A pointer to a ln_rng_func_def\&. This parameter is optional, leave it to NULL to use the default C RNG\&.
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+A new lattice object on success\&. NULL if: dimensions < 1 dim_length < 1 memory could not be allocated (out of memory\&.) 
+.RE
+.PP
+
+.SS "float ln_lattice_value1 (\fBln_lattice\fPlattice, intx)"
+Retrieves a value from a 1D lattice\&.
+.PP
+\fBReturns:\fP
+.RS 4
+The value at coordinate x in the lattice or infinity if lattice\&.dimensions != 1 or the coordinate are out of bounds\&. 
+.RE
+.PP
+
+.SS "float ln_lattice_value2 (\fBln_lattice\fPlattice, intx, inty)"
+Retrieves a value from a 2D lattice\&.
+.PP
+\fBReturns:\fP
+.RS 4
+The value at coordinates (x, y) in the lattice or infinity if lattice\&.dimensions != 2 or the coordinates are out of bounds\&. 
+.RE
+.PP
+
+.SS "float ln_lattice_value3 (\fBln_lattice\fPlattice, intx, inty, intz)"
+Retrieves a value from a 3D lattice\&.
+.PP
+\fBReturns:\fP
+.RS 4
+The value at coordinates (x, y, z) in the lattice or infinity if lattice\&.dimensions != 3 or the coordinates are out of bounds\&. 
+.RE
+.PP
+
+.SS "float ln_lattice_value4 (\fBln_lattice\fPlattice, intx, inty, intz, intw)"
+Retrieves a value from a 4D lattice\&.
+.PP
+\fBReturns:\fP
+.RS 4
+The value at coordinates (x, y, z, w) in the lattice or infinity if lattice\&.dimensions != 4 or the coordinates are out of bounds\&. 
+.RE
+.PP
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for latticenoise from the source code\&.

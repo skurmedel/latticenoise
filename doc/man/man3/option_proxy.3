@@ -1,0 +1,25 @@
+.TH "option_proxy" 3 "Wed Jan 16 2013" "latticenoise" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+option_proxy \- 
+.SH SYNOPSIS
+.br
+.PP
+.SS "Data Fields"
+
+.in +1c
+.ti -1c
+.RI "const \fBdropt_option\fP * \fBoption\fP"
+.br
+.ti -1c
+.RI "const \fBdropt_context\fP * \fBcontext\fP"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+A proxy for a \fBdropt_option\fP used for qsort and bsearch\&. Instead of sorting the \fBdropt_option\fP table directly, we sort arrays of \fBoption_proxy\fP structures\&. This allows us to have separate arrays sorted by different keys and allows passing along additional data\&. 
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for latticenoise from the source code\&.

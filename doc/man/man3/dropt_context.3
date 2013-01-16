@@ -1,0 +1,50 @@
+.TH "context" 3 "Wed Jan 16 2013" "latticenoise" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+context \- 
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fC#include <droptxx\&.hpp>\fP
+.PP
+Inherits \fBcontext_ref\fP\&.
+.SS "Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBcontext\fP (const \fBdropt_option\fP *options)"
+.br
+.ti -1c
+.RI "\fB~context\fP ()"
+.br
+.in -1c
+.SS "Additional Inherited Members"
+.SH "Detailed Description"
+.PP 
+\fBdropt::context\fP is equivalent to \fBdropt::context_ref\fP but uses an internally managed \fBdropt_context\fP instance\&. 
+.SH "Constructor & Destructor Documentation"
+.PP 
+.SS "\fBcontext\fP (const \fBdropt_option\fP *options)\fC [explicit]\fP"
+\fBdropt::context::context\fP 
+.PP
+.nf
+dropt::context constructor.
+
+.fi
+.PP
+.PP
+PARAMETERS: IN options : The list of option specifications\&. Must not be NULL\&. 
+.SS "~\fBcontext\fP ()"
+\fBdropt::context::~context\fP 
+.PP
+.nf
+dropt::context destructor.
+.fi
+.PP
+ 
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for latticenoise from the source code\&.

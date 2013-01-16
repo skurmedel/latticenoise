@@ -3,7 +3,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
-<title>latticenoise: latticenoise.h File Reference</title>
+<title>latticenoise: src/latticenoise.h File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -42,6 +42,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
+      <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
+      <li><a href="namespaces.html"><span>Namespaces</span></a></li>
       <li><a href="annotated.html"><span>Data&#160;Structures</span></a></li>
       <li class="current"><a href="files.html"><span>Files</span></a></li>
       <li>
@@ -88,7 +90,7 @@ $(document).ready(function(){initNavTree('latticenoise_8h.html','');});
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Data Structures</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Typedefs</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Macros</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Data Structures</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Typedefs</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Macros</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(8)"><span class="SelectionMark">&#160;</span>Pages</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -116,45 +118,52 @@ Data Structures</h2></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structpoint__s.html">point_s</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structln__rng__func__def__s.html">ln_rng_func_def_s</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
-<tr class="memitem:a71b8e1f464dceb6d92422f11865df8fe"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="latticenoise_8h.html#a71b8e1f464dceb6d92422f11865df8fe">point_add</a>(p1, p2)&#160;&#160;&#160;((<a class="el" href="latticenoise_8h.html#ac7b4b6edb9b8c8b7a76c34a9cc50257b">point</a>){p1.x + p2.x, p1.y + p2.y, p1.z + p2.z})</td></tr>
-<tr class="separator:a71b8e1f464dceb6d92422f11865df8fe"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a61b1934cc84cca408c4d3e8edbde3923"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="latticenoise_8h.html#a61b1934cc84cca408c4d3e8edbde3923">point_print</a>(p1)&#160;&#160;&#160;printf(&quot;&lt;%0.5f, %0.5f, %0.5f&gt;&quot;, p1.x, p1.y, p1.z)</td></tr>
-<tr class="separator:a61b1934cc84cca408c4d3e8edbde3923"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a08990907e0364cbda315615124d519d4"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="latticenoise_8h.html#a08990907e0364cbda315615124d519d4">point3_add</a>(p1, p2)&#160;&#160;&#160;((<a class="el" href="latticenoise_8h.html#adaff03f1db729a0f181c5e6a271b2e33">point3</a>){p1.x + p2.x, p1.y + p2.y, p1.z + p2.z})</td></tr>
+<tr class="separator:a08990907e0364cbda315615124d519d4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6a24f4be1b003076a03f971ccc422ba7"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="latticenoise_8h.html#a6a24f4be1b003076a03f971ccc422ba7">point3_print</a>(p1)&#160;&#160;&#160;printf(&quot;&lt;%0.5f, %0.5f, %0.5f&gt;&quot;, p1.x, p1.y, p1.z)</td></tr>
+<tr class="separator:a6a24f4be1b003076a03f971ccc422ba7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
 Typedefs</h2></td></tr>
 <tr class="memitem:a03dfd680b5ffd89f423cd0adb5c1ef96"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a03dfd680b5ffd89f423cd0adb5c1ef96"></a>
 typedef <a class="el" href="structln__lattice__s.html">ln_lattice_s</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>ln_lattice</b></td></tr>
 <tr class="separator:a03dfd680b5ffd89f423cd0adb5c1ef96"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac7b4b6edb9b8c8b7a76c34a9cc50257b"><td class="memItemLeft" align="right" valign="top">typedef struct <a class="el" href="structpoint__s.html">point_s</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="latticenoise_8h.html#ac7b4b6edb9b8c8b7a76c34a9cc50257b">point</a></td></tr>
-<tr class="separator:ac7b4b6edb9b8c8b7a76c34a9cc50257b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adaff03f1db729a0f181c5e6a271b2e33"><td class="memItemLeft" align="right" valign="top">typedef struct <a class="el" href="structpoint__s.html">point_s</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="latticenoise_8h.html#adaff03f1db729a0f181c5e6a271b2e33">point3</a></td></tr>
+<tr class="separator:adaff03f1db729a0f181c5e6a271b2e33"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aad692ec0b7e983f237c63c9eb5a5b151"><td class="memItemLeft" align="right" valign="top">typedef struct <a class="el" href="structln__rng__func__def__s.html">ln_rng_func_def_s</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="latticenoise_8h.html#aad692ec0b7e983f237c63c9eb5a5b151">ln_rng_func_def</a></td></tr>
+<tr class="separator:aad692ec0b7e983f237c63c9eb5a5b151"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a391c37cfc3a17aa7f1714229f10acb1c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structln__lattice__s.html">ln_lattice</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="latticenoise_8h.html#a391c37cfc3a17aa7f1714229f10acb1c">ln_lattice_new</a> (int size, int seed)</td></tr>
-<tr class="separator:a391c37cfc3a17aa7f1714229f10acb1c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aaf06534159637c1d6bfbdb086ea25c9d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structln__lattice__s.html">ln_lattice</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="latticenoise_8h.html#aaf06534159637c1d6bfbdb086ea25c9d">ln_lattice_new</a> (int dimensions, int dim_length, int seed, <a class="el" href="latticenoise_8h.html#aad692ec0b7e983f237c63c9eb5a5b151">ln_rng_func_def</a> rng_func)</td></tr>
+<tr class="separator:aaf06534159637c1d6bfbdb086ea25c9d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2a52f21bd80ddb0fb314ceb6fa766a88"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="latticenoise_8h.html#a2a52f21bd80ddb0fb314ceb6fa766a88">ln_lattice_free</a> (<a class="el" href="structln__lattice__s.html">ln_lattice</a> lattice)</td></tr>
 <tr class="separator:a2a52f21bd80ddb0fb314ceb6fa766a88"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a171f320d9bada665a682d082b92ab0b8"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="latticenoise_8h.html#a171f320d9bada665a682d082b92ab0b8">ln_lattice_value</a> (<a class="el" href="structln__lattice__s.html">ln_lattice</a> lattice, int index)</td></tr>
-<tr class="separator:a171f320d9bada665a682d082b92ab0b8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5c91503e2efd746dd91f9d3e9fb206ea"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a5c91503e2efd746dd91f9d3e9fb206ea"></a>
-float&#160;</td><td class="memItemRight" valign="bottom"><b>ln_lattice_2dvalue</b> (<a class="el" href="structln__lattice__s.html">ln_lattice</a> lattice, <a class="el" href="latticenoise_8h.html#ac7b4b6edb9b8c8b7a76c34a9cc50257b">point</a> p)</td></tr>
-<tr class="separator:a5c91503e2efd746dd91f9d3e9fb206ea"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae2f84ea3b89883b2e85f15c2004ed767"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="latticenoise_8h.html#ae2f84ea3b89883b2e85f15c2004ed767">ln_lattice_value1</a> (<a class="el" href="structln__lattice__s.html">ln_lattice</a> lattice, int x)</td></tr>
+<tr class="separator:ae2f84ea3b89883b2e85f15c2004ed767"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac832da8e4fe61ee4860fd7fb86c76384"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="latticenoise_8h.html#ac832da8e4fe61ee4860fd7fb86c76384">ln_lattice_value2</a> (<a class="el" href="structln__lattice__s.html">ln_lattice</a> lattice, int x, int y)</td></tr>
+<tr class="separator:ac832da8e4fe61ee4860fd7fb86c76384"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5a58ddfa0a09a8aeb4834d110747bfc1"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="latticenoise_8h.html#a5a58ddfa0a09a8aeb4834d110747bfc1">ln_lattice_value3</a> (<a class="el" href="structln__lattice__s.html">ln_lattice</a> lattice, int x, int y, int z)</td></tr>
+<tr class="separator:a5a58ddfa0a09a8aeb4834d110747bfc1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6aa13ddbf37349dcf6fd8baf354eca07"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="latticenoise_8h.html#a6aa13ddbf37349dcf6fd8baf354eca07">ln_lattice_value4</a> (<a class="el" href="structln__lattice__s.html">ln_lattice</a> lattice, int x, int y, int z, int w)</td></tr>
+<tr class="separator:a6aa13ddbf37349dcf6fd8baf354eca07"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p><a class="el" href="latticenoise_8h.html">latticenoise.h</a></p>
 <p>This file contains various methods for generating and rendering procedural textures based on the Lattice Noise method.</p>
 <p>It contains common functions as well as specific implementations such as Perlin Noise and Turbulence. </p>
 </div><h2 class="groupheader">Macro Definition Documentation</h2>
-<a class="anchor" id="a71b8e1f464dceb6d92422f11865df8fe"></a>
+<a class="anchor" id="a08990907e0364cbda315615124d519d4"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define point_add</td>
+          <td class="memname">#define point3_add</td>
           <td>(</td>
           <td class="paramtype">&#160;</td>
           <td class="paramname">p1, </td>
@@ -168,21 +177,21 @@ float&#160;</td><td class="memItemRight" valign="bottom"><b>ln_lattice_2dvalue</
         <tr>
           <td></td>
           <td>)</td>
-          <td></td><td>&#160;&#160;&#160;((<a class="el" href="latticenoise_8h.html#ac7b4b6edb9b8c8b7a76c34a9cc50257b">point</a>){p1.x + p2.x, p1.y + p2.y, p1.z + p2.z})</td>
+          <td></td><td>&#160;&#160;&#160;((<a class="el" href="latticenoise_8h.html#adaff03f1db729a0f181c5e6a271b2e33">point3</a>){p1.x + p2.x, p1.y + p2.y, p1.z + p2.z})</td>
         </tr>
       </table>
 </div><div class="memdoc">
 <p>A simple vector addition.</p>
-<dl class="section return"><dt>Returns</dt><dd>(point){ p1.x + p2.x, p1.y + p2.y, p1.z + p2.z } </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>(point3){ p1.x + p2.x, p1.y + p2.y, p1.z + p2.z } </dd></dl>
 
 </div>
 </div>
-<a class="anchor" id="a61b1934cc84cca408c4d3e8edbde3923"></a>
+<a class="anchor" id="a6a24f4be1b003076a03f971ccc422ba7"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define point_print</td>
+          <td class="memname">#define point3_print</td>
           <td>(</td>
           <td class="paramtype">&#160;</td>
           <td class="paramname">p1</td><td>)</td>
@@ -190,18 +199,31 @@ float&#160;</td><td class="memItemRight" valign="bottom"><b>ln_lattice_2dvalue</
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Prints a point to console, purely for debugging purposes.</p>
+<p>Prints a point3 to console, purely for debugging purposes.</p>
 <p>No newline is written. </p>
 
 </div>
 </div>
 <h2 class="groupheader">Typedef Documentation</h2>
-<a class="anchor" id="ac7b4b6edb9b8c8b7a76c34a9cc50257b"></a>
+<a class="anchor" id="aad692ec0b7e983f237c63c9eb5a5b151"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">typedef struct <a class="el" href="structpoint__s.html">point_s</a>  <a class="el" href="latticenoise_8h.html#ac7b4b6edb9b8c8b7a76c34a9cc50257b">point</a></td>
+          <td class="memname">typedef struct <a class="el" href="structln__rng__func__def__s.html">ln_rng_func_def_s</a>  <a class="el" href="latticenoise_8h.html#aad692ec0b7e983f237c63c9eb5a5b151">ln_rng_func_def</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Provides a custom RNG. </p>
+
+</div>
+</div>
+<a class="anchor" id="adaff03f1db729a0f181c5e6a271b2e33"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef struct <a class="el" href="structpoint__s.html">point_s</a>  <a class="el" href="latticenoise_8h.html#adaff03f1db729a0f181c5e6a271b2e33">point3</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -227,7 +249,7 @@ float&#160;</td><td class="memItemRight" valign="bottom"><b>ln_lattice_2dvalue</
 
 </div>
 </div>
-<a class="anchor" id="a391c37cfc3a17aa7f1714229f10acb1c"></a>
+<a class="anchor" id="aaf06534159637c1d6bfbdb086ea25c9d"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -235,13 +257,25 @@ float&#160;</td><td class="memItemRight" valign="bottom"><b>ln_lattice_2dvalue</
           <td class="memname"><a class="el" href="structln__lattice__s.html">ln_lattice</a> ln_lattice_new </td>
           <td>(</td>
           <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>size</em>, </td>
+          <td class="paramname"><em>dimensions</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>seed</em>&#160;</td>
+          <td class="paramname"><em>dim_length</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>seed</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="latticenoise_8h.html#aad692ec0b7e983f237c63c9eb5a5b151">ln_rng_func_def</a>&#160;</td>
+          <td class="paramname"><em>rng_func</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -250,24 +284,26 @@ float&#160;</td><td class="memItemRight" valign="bottom"><b>ln_lattice_2dvalue</
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Creates a new lattice.</p>
+<p>Creates a new lattice, allocates the memory needed and feeds it with values.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">size</td><td>The size of the lattice. It must be &gt;= 1.</td></tr>
-    <tr><td class="paramname">seed</td><td>A seed value for the RNG used to initialize the lattice. It is optional and may be set to 0, if so the function seeds the RNG itself.</td></tr>
+    <tr><td class="paramname">dimensions</td><td>How many dimensions the lattice has. It must be &gt;= 1. </td></tr>
+    <tr><td class="paramname">dim_length</td><td>The size in one dimension of the lattice. It must be &gt;= 1. The total size is pow(dim_length, dimensions). </td></tr>
+    <tr><td class="paramname">seed</td><td>A seed value for the RNG used to initialize the lattice. It is optional and may be set to 0, if so the function seeds the RNG itself. </td></tr>
+    <tr><td class="paramname">rng_func</td><td>A pointer to a ln_rng_func_def. This parameter is optional, leave it to NULL to use the default C RNG.</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>A new lattice object on success. NULL if: size &lt; 1 size memory could not be allocated (out of memory.) </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>A new lattice object on success. NULL if: dimensions &lt; 1 dim_length &lt; 1 memory could not be allocated (out of memory.) </dd></dl>
 
 </div>
 </div>
-<a class="anchor" id="a171f320d9bada665a682d082b92ab0b8"></a>
+<a class="anchor" id="ae2f84ea3b89883b2e85f15c2004ed767"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">float ln_lattice_value </td>
+          <td class="memname">float ln_lattice_value1 </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="structln__lattice__s.html">ln_lattice</a>&#160;</td>
           <td class="paramname"><em>lattice</em>, </td>
@@ -276,7 +312,7 @@ float&#160;</td><td class="memItemRight" valign="bottom"><b>ln_lattice_2dvalue</
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>index</em>&#160;</td>
+          <td class="paramname"><em>x</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -285,10 +321,128 @@ float&#160;</td><td class="memItemRight" valign="bottom"><b>ln_lattice_2dvalue</
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Gets a value from the lattice.</p>
-<p>It permutes the index with a special permutation table to increase visual quality and makes sure it's within bounds.</p>
-<p>As a result, any integer will produce a value. It will not be a mapping to the exact index specified.</p>
-<p>If you want to get the actual value at some index, you'll have to manually access the values-array stored in the lattice. </p>
+<p>Retrieves a value from a 1D lattice.</p>
+<dl class="section return"><dt>Returns</dt><dd>The value at coordinate x in the lattice or infinity if lattice.dimensions != 1 or the coordinate are out of bounds. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ac832da8e4fe61ee4860fd7fb86c76384"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">float ln_lattice_value2 </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structln__lattice__s.html">ln_lattice</a>&#160;</td>
+          <td class="paramname"><em>lattice</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>x</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>y</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Retrieves a value from a 2D lattice.</p>
+<dl class="section return"><dt>Returns</dt><dd>The value at coordinates (x, y) in the lattice or infinity if lattice.dimensions != 2 or the coordinates are out of bounds. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a5a58ddfa0a09a8aeb4834d110747bfc1"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">float ln_lattice_value3 </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structln__lattice__s.html">ln_lattice</a>&#160;</td>
+          <td class="paramname"><em>lattice</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>x</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>y</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>z</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Retrieves a value from a 3D lattice.</p>
+<dl class="section return"><dt>Returns</dt><dd>The value at coordinates (x, y, z) in the lattice or infinity if lattice.dimensions != 3 or the coordinates are out of bounds. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a6aa13ddbf37349dcf6fd8baf354eca07"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">float ln_lattice_value4 </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structln__lattice__s.html">ln_lattice</a>&#160;</td>
+          <td class="paramname"><em>lattice</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>x</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>y</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>z</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>w</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Retrieves a value from a 4D lattice.</p>
+<dl class="section return"><dt>Returns</dt><dd>The value at coordinates (x, y, z, w) in the lattice or infinity if lattice.dimensions != 4 or the coordinates are out of bounds. </dd></dl>
 
 </div>
 </div>
@@ -297,8 +451,8 @@ float&#160;</td><td class="memItemRight" valign="bottom"><b>ln_lattice_2dvalue</
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="latticenoise_8h.html">latticenoise.h</a></li>
-    <li class="footer">Generated on Thu Nov 29 2012 02:03:08 for latticenoise by
+    <li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a class="el" href="latticenoise_8h.html">latticenoise.h</a></li>
+    <li class="footer">Generated on Wed Jan 16 2013 04:40:42 for latticenoise by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.2 </li>
   </ul>

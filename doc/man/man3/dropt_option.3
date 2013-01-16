@@ -1,0 +1,56 @@
+.TH "dropt_option" 3 "Wed Jan 16 2013" "latticenoise" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+dropt_option \- 
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fC#include <dropt\&.h>\fP
+.SS "Data Fields"
+
+.in +1c
+.ti -1c
+.RI "dropt_char \fBshort_name\fP"
+.br
+.ti -1c
+.RI "const dropt_char * \fBlong_name\fP"
+.br
+.ti -1c
+.RI "const dropt_char * \fBdescription\fP"
+.br
+.ti -1c
+.RI "const dropt_char * \fBarg_description\fP"
+.br
+.ti -1c
+.RI "dropt_option_handler_func \fBhandler\fP"
+.br
+.ti -1c
+.RI "void * \fBhandler_data\fP"
+.br
+.ti -1c
+.RI "unsigned int \fBattr\fP"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+Properties defining each option:
+.PP
+short_name: The option's short name (e\&.g\&. the 'h' in -h)\&. Use '\\0' if the option has no short name\&.
+.PP
+long_name: The option's long name (e\&.g\&. 'help' in --help)\&. Use NULL if the option has no long name\&.
+.PP
+description: The description shown when generating help\&. May be NULL for undocumented options\&.
+.PP
+arg_description: The description for the option's argument (e\&.g\&. --option=argument or --option argument), printed when generating help\&. If NULL, the option does not take an argument\&.
+.PP
+handler: The handler callback and data invoked in response to encountering the option\&.
+.PP
+handler_data: Callback data for the handler\&. For typical handlers, this is usually the address of a variable for the handler to modify\&.
+.PP
+attr: Miscellaneous attributes\&. See below\&. 
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for latticenoise from the source code\&.

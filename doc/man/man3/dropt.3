@@ -1,0 +1,208 @@
+.TH "dropt" 3 "Wed Jan 16 2013" "latticenoise" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+dropt \- 
+.SH SYNOPSIS
+.br
+.PP
+.SS "Data Structures"
+
+.in +1c
+.ti -1c
+.RI "class \fBhelp_params\fP"
+.br
+.ti -1c
+.RI "class \fBcontext_ref\fP"
+.br
+.ti -1c
+.RI "class \fBcontext\fP"
+.br
+.in -1c
+.SS "Typedefs"
+
+.in +1c
+.ti -1c
+.RI "typedef std::basic_string
+.br
+< dropt_char > \fBstring\fP"
+.br
+.ti -1c
+.RI "typedef std::basic_ostream
+.br
+< dropt_char > \fBostream\fP"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "dropt_error \fBconvert_exception\fP ()"
+.br
+.ti -1c
+.RI "dropt_error \fBhandle_bool\fP (\fBdropt_context\fP *\fBcontext\fP, const dropt_char *optionArgument, void *handlerData)"
+.br
+.ti -1c
+.RI "dropt_error \fBhandle_verbose_bool\fP (\fBdropt_context\fP *\fBcontext\fP, const dropt_char *optionArgument, void *handlerData)"
+.br
+.ti -1c
+.RI "dropt_error \fBhandle_string\fP (\fBdropt_context\fP *\fBcontext\fP, const dropt_char *optionArgument, void *handlerData)"
+.br
+.ti -1c
+.RI "dropt_error \fBhandle_int\fP (\fBdropt_context\fP *\fBcontext\fP, const dropt_char *optionArgument, void *handlerData)"
+.br
+.ti -1c
+.RI "dropt_error \fBhandle_uint\fP (\fBdropt_context\fP *\fBcontext\fP, const dropt_char *optionArgument, void *handlerData)"
+.br
+.ti -1c
+.RI "dropt_error \fBhandle_double\fP (\fBdropt_context\fP *\fBcontext\fP, const dropt_char *optionArgument, void *handlerData)"
+.br
+.in -1c
+.SS "Variables"
+
+.in +1c
+.ti -1c
+.RI "dropt_option_handler_decl \fBhandle_bool\fP"
+.br
+.ti -1c
+.RI "dropt_option_handler_decl \fBhandle_verbose_bool\fP"
+.br
+.ti -1c
+.RI "dropt_option_handler_decl \fBhandle_string\fP"
+.br
+.ti -1c
+.RI "dropt_option_handler_decl \fBhandle_int\fP"
+.br
+.ti -1c
+.RI "dropt_option_handler_decl \fBhandle_uint\fP"
+.br
+.ti -1c
+.RI "dropt_option_handler_decl \fBhandle_double\fP"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+droptxx\&.cpp
+.PP
+A C++ wrapper for dropt\&.
+.PP
+Copyright (c) 2008-2010 James D\&. Lin jameslin@cal.berkeley.edu
+.PP
+The latest version of this file can be downloaded from: http://www.taenarum.com/software/dropt/
+.PP
+This software is provided 'as-is', without any express or implied warranty\&. In no event will the authors be held liable for any damages arising from the use of this software\&.
+.PP
+Permission is granted to anyone to use this software for any purpose, including commercial applications, and to alter it and redistribute it freely, subject to the following restrictions:
+.PP
+.IP "1." 4
+The origin of this software must not be misrepresented; you must not claim that you wrote the original software\&. If you use this software in a product, an acknowledgment in the product documentation would be appreciated but is not required\&.
+.PP
+.PP
+.IP "2." 4
+Altered source versions must be plainly marked as such, and must not be misrepresented as being the original software\&.
+.PP
+.PP
+.IP "3." 4
+This notice may not be removed or altered from any source distribution\&.
+.PP
+.PP
+\fBdroptxx\&.hpp\fP
+.PP
+A C++ wrapper for dropt\&.
+.PP
+Copyright (c) 2008-2010 James D\&. Lin jameslin@cal.berkeley.edu
+.PP
+The latest version of this file can be downloaded from: http://www.taenarum.com/software/dropt/
+.PP
+This software is provided 'as-is', without any express or implied warranty\&. In no event will the authors be held liable for any damages arising from the use of this software\&.
+.PP
+Permission is granted to anyone to use this software for any purpose, including commercial applications, and to alter it and redistribute it freely, subject to the following restrictions:
+.PP
+.IP "1." 4
+The origin of this software must not be misrepresented; you must not claim that you wrote the original software\&. If you use this software in a product, an acknowledgment in the product documentation would be appreciated but is not required\&.
+.PP
+.PP
+.IP "2." 4
+Altered source versions must be plainly marked as such, and must not be misrepresented as being the original software\&.
+.PP
+.PP
+.IP "3." 4
+This notice may not be removed or altered from any source distribution\&. 
+.PP
+
+.SH "Function Documentation"
+.PP 
+.SS "dropt_error convert_exception ()"
+\fBdropt::convert_exception\fP 
+.PP
+.nf
+Converts the last thrown C++ exception to a dropt_error.
+
+.fi
+.PP
+.PP
+RETURNS: An error code\&. 
+.SS "dropt_error dropt::handle_bool (\fBdropt_context\fP *context, const dropt_char *optionArgument, void *handlerData)"
+dropt::handle_bool 
+.PP
+.nf
+Parses a C++ bool value from the given string if possible.
+
+.fi
+.PP
+.PP
+PARAMETERS: IN/OUT context : The options context\&. IN optionArgument : A string representing a boolean value (0 or 1)\&. If NULL, the boolean value is assumed to be true\&. OUT handlerData : A pointer to a C++ bool\&. On success, set to the interpreted boolean value\&. On error, left untouched\&.
+.PP
+RETURNS: See dropt_handle_bool\&. 
+.SS "dropt_error dropt::handle_double (\fBdropt_context\fP *context, const dropt_char *optionArgument, void *handlerData)"
+dropt::handle_double 
+.PP
+.nf
+A wrapper around dropt_handle_double.
+.fi
+.PP
+ 
+.SS "dropt_error dropt::handle_int (\fBdropt_context\fP *context, const dropt_char *optionArgument, void *handlerData)"
+dropt::handle_int 
+.PP
+.nf
+A wrapper around dropt_handle_int.
+.fi
+.PP
+ 
+.SS "dropt_error dropt::handle_string (\fBdropt_context\fP *context, const dropt_char *optionArgument, void *handlerData)"
+dropt::handle_string 
+.PP
+.nf
+Obtains a C++ string.
+
+.fi
+.PP
+.PP
+PARAMETERS: IN/OUT context : The options context\&. IN optionArgument : A string\&. If NULL, returns dropt_error_insufficient_arguments\&. OUT handlerData : A pointer to a dropt::string\&. On success, set to the input string\&. On error, left untouched\&.
+.PP
+RETURNS: dropt_error_none dropt_error_insufficient_arguments dropt_error_insufficient_memory 
+.SS "dropt_error dropt::handle_uint (\fBdropt_context\fP *context, const dropt_char *optionArgument, void *handlerData)"
+dropt::handle_uint 
+.PP
+.nf
+A wrapper around dropt_handle_uint.
+.fi
+.PP
+ 
+.SS "dropt_error dropt::handle_verbose_bool (\fBdropt_context\fP *context, const dropt_char *optionArgument, void *handlerData)"
+dropt::handle_verbose_bool 
+.PP
+.nf
+Like dropt::handle_bool but accepts "true" and "false" string
+values.
+
+.fi
+.PP
+.PP
+PARAMETERS: IN/OUT context : The options context\&. IN optionArgument : A string representing a boolean value (0 or 1)\&. If NULL, the boolean value is assumed to be true\&. OUT handlerData : A pointer to a C++ bool\&. On success, set to the interpreted boolean value\&. On error, left untouched\&.
+.PP
+RETURNS: See dropt_handle_bool\&. 
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for latticenoise from the source code\&.

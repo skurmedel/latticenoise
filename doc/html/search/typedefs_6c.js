@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['ln_5flattice',['ln_lattice',['../latticenoise_8h.html#a03dfd680b5ffd89f423cd0adb5c1ef96',1,'latticenoise.h']]]
+  ['ln_5frng_5ffunc_5fdef',['ln_rng_func_def',['../latticenoise_8h.html#aad692ec0b7e983f237c63c9eb5a5b151',1,'latticenoise.h']]]
 ];

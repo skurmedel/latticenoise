@@ -1,0 +1,171 @@
+.TH "context_ref" 3 "Wed Jan 16 2013" "latticenoise" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+context_ref \- 
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fC#include <droptxx\&.hpp>\fP
+.PP
+Inherited by \fBcontext\fP\&.
+.SS "Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBcontext_ref\fP (\fBdropt_context\fP *\fBcontext\fP)"
+.br
+.ti -1c
+.RI "\fBdropt_context\fP * \fBraw\fP ()"
+.br
+.ti -1c
+.RI "const \fBdropt_option\fP * \fBget_options\fP () const "
+.br
+.ti -1c
+.RI "void \fBset_error_handler\fP (dropt_error_handler_func handler, void *handlerData)"
+.br
+.ti -1c
+.RI "void \fBset_strncmp\fP (dropt_strncmp_func cmp)"
+.br
+.ti -1c
+.RI "void \fBallow_concatenated_arguments\fP (bool allow=true)"
+.br
+.ti -1c
+.RI "dropt_char ** \fBparse\fP (int argc, dropt_char **argv)"
+.br
+.ti -1c
+.RI "dropt_char ** \fBparse\fP (dropt_char **argv)"
+.br
+.ti -1c
+.RI "dropt_error \fBget_error\fP () const "
+.br
+.ti -1c
+.RI "void \fBget_error_details\fP (dropt_char **optionName, dropt_char **optionArgument) const "
+.br
+.ti -1c
+.RI "const dropt_char * \fBget_error_message\fP ()"
+.br
+.ti -1c
+.RI "void \fBclear_error\fP ()"
+.br
+.ti -1c
+.RI "string \fBget_help\fP (const \fBhelp_params\fP &helpParams=\fBhelp_params\fP()) const "
+.br
+.in -1c
+.SS "Protected Attributes"
+
+.in +1c
+.ti -1c
+.RI "\fBdropt_context\fP * \fBmContext\fP"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+\fBdropt::context_ref\fP is a simple C++ wrapper around \fBdropt_context\fP functions\&. It does not do any management of a \fBdropt_context\fP\&. 
+.SH "Constructor & Destructor Documentation"
+.PP 
+.SS "\fBcontext_ref\fP (\fBdropt_context\fP *context)"
+\fBdropt::context_ref::context_ref\fP 
+.PP
+.nf
+dropt::context_ref constructor.
+
+.fi
+.PP
+.PP
+PARAMETERS: IN context : The options context\&. Must not be NULL\&. Does not take ownership of the context\&. 
+.SH "Member Function Documentation"
+.PP 
+.SS "void allow_concatenated_arguments (boolallow = \fCtrue\fP)"
+dropt::allow_concatenated_arguments 
+.PP
+.nf
+A wrapper around dropt_allow_concatenated_arguments.
+.fi
+.PP
+ 
+.SS "void clear_error ()"
+\fBdropt::context_ref::clear_error\fP 
+.PP
+.nf
+A wrapper around dropt_clear_error.
+.fi
+.PP
+ 
+.SS "dropt_error get_error () const"
+\fBdropt::context_ref::get_error\fP 
+.PP
+.nf
+A wrapper around dropt_get_error.
+.fi
+.PP
+ 
+.SS "void get_error_details (dropt_char **optionName, dropt_char **optionArgument) const"
+\fBdropt::context_ref::get_error_details\fP 
+.PP
+.nf
+A wrapper around dropt_get_error_details.
+.fi
+.PP
+ 
+.SS "const dropt_char * get_error_message ()"
+\fBdropt::context_ref::get_error_message\fP 
+.PP
+.nf
+A wrapper around dropt_get_error_message.
+.fi
+.PP
+ 
+.SS "string get_help (const \fBhelp_params\fP &helpParams = \fC\fBhelp_params\fP()\fP) const"
+\fBdropt::context_ref::get_help\fP 
+.PP
+.nf
+A wrapper around dropt_get_help.
+
+.fi
+.PP
+.PP
+PARAMETERS: IN \fBhelp_params\fP : The help parameters\&.
+.PP
+RETURNS: A string for the available options\&. Returns an empty string on error\&. 
+.SS "const \fBdropt_option\fP * get_options () const"
+\fBdropt::context_ref::get_options\fP 
+.PP
+.nf
+A wrapper around dropt_get_options.
+.fi
+.PP
+ 
+.SS "dropt_char ** parse (intargc, dropt_char **argv)"
+\fBdropt::context_ref::parse\fP 
+.PP
+.nf
+Wrappers around dropt_parse.
+.fi
+.PP
+ 
+.SS "\fBdropt_context\fP * raw ()"
+\fBdropt::context_ref::raw\fP
+.PP
+RETURNS: The raw \fBdropt_context\fP for this \fBdropt::context_ref\fP\&. 
+.SS "void set_error_handler (dropt_error_handler_funchandler, void *handlerData)"
+\fBdropt::context_ref::set_error_handler\fP 
+.PP
+.nf
+A wrapper around dropt_set_error_handler.
+.fi
+.PP
+ 
+.SS "void set_strncmp (dropt_strncmp_funccmp)"
+\fBdropt::context_ref::set_strncmp\fP 
+.PP
+.nf
+A wrapper around dropt_set_strncmp.
+.fi
+.PP
+ 
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for latticenoise from the source code\&.

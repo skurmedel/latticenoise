@@ -1,0 +1,38 @@
+.TH "ln_rng_func_def_s" 3 "Wed Jan 16 2013" "latticenoise" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+ln_rng_func_def_s \- 
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fC#include <latticenoise\&.h>\fP
+.SS "Data Fields"
+
+.in +1c
+.ti -1c
+.RI "float(* \fBfunc\fP )(void *state)"
+.br
+.ti -1c
+.RI "void * \fBstate\fP"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+Provides a custom RNG\&. 
+.SH "Field Documentation"
+.PP 
+.SS "float(* func)(void *state)"
+A custom RNG that gets passed the custom state on each subsequent call\&.
+.PP
+\fBReturns:\fP
+.RS 4
+a value between 0\&.0 and 1\&.0\&. 
+.RE
+.PP
+
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for latticenoise from the source code\&.

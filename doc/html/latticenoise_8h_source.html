@@ -3,7 +3,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
-<title>latticenoise: latticenoise.h Source File</title>
+<title>latticenoise: src/latticenoise.h Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -42,6 +42,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
+      <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
+      <li><a href="namespaces.html"><span>Namespaces</span></a></li>
       <li><a href="annotated.html"><span>Data&#160;Structures</span></a></li>
       <li class="current"><a href="files.html"><span>Files</span></a></li>
       <li>
@@ -88,7 +90,7 @@ $(document).ready(function(){initNavTree('latticenoise_8h_source.html','');});
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Data Structures</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Typedefs</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Macros</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Data Structures</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Typedefs</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Macros</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(8)"><span class="SelectionMark">&#160;</span>Pages</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -131,45 +133,68 @@ $(document).ready(function(){initNavTree('latticenoise_8h_source.html','');});
 <div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="comment">    either expressed or implied, of the FreeBSD Project.</span></div>
 <div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="comment">*/</span></div>
 <div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;</div>
-<div class="line"><a name="l00047"></a><span class="lineno"><a class="code" href="structln__lattice__s.html">   47</a></span>&#160;<span class="keyword">struct </span><a class="code" href="structln__lattice__s.html">ln_lattice_s</a></div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;{</div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;    <span class="comment">/* NOTE:    DO NOT TOUCH THESE VALUES AFTER THE LATTICE HAS BEEN CONSTRUCTED.</span></div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;<span class="comment">                IT WILL PROBABLY BLOW UP YOUR PROGRAM. */</span></div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;</div>
-<div class="line"><a name="l00053"></a><span class="lineno"><a class="code" href="structln__lattice__s.html#ae2c4a32612e8caa268af840efafef669">   53</a></span>&#160;    <span class="keywordtype">float</span> *<a class="code" href="structln__lattice__s.html#ae2c4a32612e8caa268af840efafef669">values</a>;</div>
-<div class="line"><a name="l00057"></a><span class="lineno"><a class="code" href="structln__lattice__s.html#a439227feff9d7f55384e8780cfc2eb82">   57</a></span>&#160;    <span class="keywordtype">int</span> <a class="code" href="structln__lattice__s.html#a439227feff9d7f55384e8780cfc2eb82">size</a>;</div>
-<div class="line"><a name="l00061"></a><span class="lineno"><a class="code" href="structln__lattice__s.html#a1447ad288a0a73454510f5777bdc3ed1">   61</a></span>&#160;    <span class="keywordtype">int</span> <a class="code" href="structln__lattice__s.html#a1447ad288a0a73454510f5777bdc3ed1">seed</a>;</div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;};</div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;</div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;<span class="keyword">typedef</span> <a class="code" href="structln__lattice__s.html">ln_lattice_s</a> *<a class="code" href="structln__lattice__s.html">ln_lattice</a>;</div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;</div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;<span class="comment">// POINT TYPE.</span></div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;</div>
-<div class="line"><a name="l00071"></a><span class="lineno"><a class="code" href="structpoint__s.html">   71</a></span>&#160;<span class="keyword">typedef</span> <span class="keyword">struct </span><a class="code" href="structpoint__s.html">point_s</a></div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;{</div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;    <span class="keywordtype">float</span> x, y, z;</div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;} <a class="code" href="latticenoise_8h.html#ac7b4b6edb9b8c8b7a76c34a9cc50257b">point</a>;</div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;</div>
-<div class="line"><a name="l00081"></a><span class="lineno"><a class="code" href="latticenoise_8h.html#a71b8e1f464dceb6d92422f11865df8fe">   81</a></span>&#160;<span class="preprocessor">#define point_add(p1, p2) ((point){p1.x + p2.x, p1.y + p2.y, p1.z + p2.z})</span></div>
-<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00088"></a><span class="lineno"><a class="code" href="latticenoise_8h.html#a61b1934cc84cca408c4d3e8edbde3923">   88</a></span>&#160;<span class="preprocessor">#define point_print(p1) printf(&quot;&lt;%0.5f, %0.5f, %0.5f&gt;&quot;, p1.x, p1.y, p1.z)</span></div>
-<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;<span class="comment">// LATTICE FUNCTIONS.</span></div>
-<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;</div>
-<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;<span class="keyword">extern</span> <a class="code" href="structln__lattice__s.html">ln_lattice</a> <a class="code" href="latticenoise_8h.html#a391c37cfc3a17aa7f1714229f10acb1c">ln_lattice_new</a>(<span class="keywordtype">int</span> size, <span class="keywordtype">int</span> seed);</div>
-<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;</div>
-<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;<span class="keyword">extern</span> <span class="keywordtype">void</span> <a class="code" href="latticenoise_8h.html#a2a52f21bd80ddb0fb314ceb6fa766a88">ln_lattice_free</a>(<a class="code" href="structln__lattice__s.html">ln_lattice</a> lattice);</div>
-<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;</div>
-<div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;<span class="keyword">extern</span> <span class="keywordtype">float</span> <a class="code" href="latticenoise_8h.html#a171f320d9bada665a682d082b92ab0b8">ln_lattice_value</a>(<a class="code" href="structln__lattice__s.html">ln_lattice</a> lattice, <span class="keywordtype">int</span> index);</div>
-<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;</div>
-<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;<span class="keyword">extern</span> <span class="keywordtype">float</span> ln_lattice_2dvalue(<a class="code" href="structln__lattice__s.html">ln_lattice</a> lattice, <a class="code" href="structpoint__s.html">point</a> p);</div>
+<div class="line"><a name="l00044"></a><span class="lineno"><a class="code" href="structln__lattice__s.html">   44</a></span>&#160;<span class="keyword">struct </span><a class="code" href="structln__lattice__s.html">ln_lattice_s</a></div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;{   </div>
+<div class="line"><a name="l00063"></a><span class="lineno"><a class="code" href="structln__lattice__s.html#ae2c4a32612e8caa268af840efafef669">   63</a></span>&#160;    <span class="keywordtype">float</span> *<a class="code" href="structln__lattice__s.html#ae2c4a32612e8caa268af840efafef669">values</a>;</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;</div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;    <span class="comment">/* </span></div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;<span class="comment">        NOTE:   PLEASE DO NOT TOUCH THESE VALUES MANUALLY, UNLESS YOU ABSOLUTELY </span></div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;<span class="comment">                KNOW WHAT YOU ARE DOING.</span></div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;<span class="comment">                EVEN THEN, I&#39;M NOT SURE YOU SHOULD TOUCH THESE. IT COULD COMPLETELY</span></div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;<span class="comment">                BORK YOUR PROGRAM/MEMORY.</span></div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;<span class="comment">    */</span></div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;</div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;</div>
+<div class="line"><a name="l00080"></a><span class="lineno"><a class="code" href="structln__lattice__s.html#ad32f99afe1378fa6e44a94ebe202cb00">   80</a></span>&#160;    <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> <a class="code" href="structln__lattice__s.html#ad32f99afe1378fa6e44a94ebe202cb00">dim_length</a>;</div>
+<div class="line"><a name="l00085"></a><span class="lineno"><a class="code" href="structln__lattice__s.html#aac913b3a1f6ef005d66bf7a84428773e">   85</a></span>&#160;    <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> <a class="code" href="structln__lattice__s.html#aac913b3a1f6ef005d66bf7a84428773e">size</a>;</div>
+<div class="line"><a name="l00089"></a><span class="lineno"><a class="code" href="structln__lattice__s.html#a1447ad288a0a73454510f5777bdc3ed1">   89</a></span>&#160;    <span class="keywordtype">int</span> <a class="code" href="structln__lattice__s.html#a1447ad288a0a73454510f5777bdc3ed1">seed</a>;</div>
+<div class="line"><a name="l00093"></a><span class="lineno"><a class="code" href="structln__lattice__s.html#a75acb87c71265cee172f20b4c9de34d0">   93</a></span>&#160;    <span class="keywordtype">unsigned</span> <span class="keywordtype">short</span> <a class="code" href="structln__lattice__s.html#a75acb87c71265cee172f20b4c9de34d0">dimensions</a>;</div>
+<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;};</div>
+<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;</div>
+<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;<span class="keyword">typedef</span> <a class="code" href="structln__lattice__s.html">ln_lattice_s</a> *<a class="code" href="structln__lattice__s.html">ln_lattice</a>;</div>
+<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;</div>
+<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;<span class="comment">// point3 TYPE.</span></div>
+<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;</div>
+<div class="line"><a name="l00103"></a><span class="lineno"><a class="code" href="structpoint__s.html">  103</a></span>&#160;<span class="keyword">typedef</span> <span class="keyword">struct </span><a class="code" href="structpoint__s.html">point_s</a></div>
+<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;{</div>
+<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;    <span class="keywordtype">float</span> x, y, z;</div>
+<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;} <a class="code" href="latticenoise_8h.html#adaff03f1db729a0f181c5e6a271b2e33">point3</a>;</div>
+<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;</div>
+<div class="line"><a name="l00113"></a><span class="lineno"><a class="code" href="latticenoise_8h.html#a08990907e0364cbda315615124d519d4">  113</a></span>&#160;<span class="preprocessor">#define point3_add(p1, p2) ((point3){p1.x + p2.x, p1.y + p2.y, p1.z + p2.z})</span></div>
+<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00120"></a><span class="lineno"><a class="code" href="latticenoise_8h.html#a6a24f4be1b003076a03f971ccc422ba7">  120</a></span>&#160;<span class="preprocessor">#define point3_print(p1) printf(&quot;&lt;%0.5f, %0.5f, %0.5f&gt;&quot;, p1.x, p1.y, p1.z)</span></div>
+<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;<span class="comment">// LATTICE FUNCTIONS.</span></div>
+<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;</div>
+<div class="line"><a name="l00127"></a><span class="lineno"><a class="code" href="structln__rng__func__def__s.html">  127</a></span>&#160;<span class="keyword">typedef</span> <span class="keyword">struct </span><a class="code" href="structln__rng__func__def__s.html">ln_rng_func_def_s</a></div>
+<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;{</div>
+<div class="line"><a name="l00134"></a><span class="lineno"><a class="code" href="structln__rng__func__def__s.html#a38b19db540729148b109124d2bd9b13f">  134</a></span>&#160;    float (*<a class="code" href="structln__rng__func__def__s.html#a38b19db540729148b109124d2bd9b13f">func</a>)(<span class="keywordtype">void</span> *state);</div>
+<div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160;    <span class="keywordtype">void</span> *state;</div>
+<div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160;} <a class="code" href="latticenoise_8h.html#aad692ec0b7e983f237c63c9eb5a5b151">ln_rng_func_def</a>;</div>
+<div class="line"><a name="l00137"></a><span class="lineno">  137</span>&#160;</div>
+<div class="line"><a name="l00160"></a><span class="lineno">  160</span>&#160;<span class="keyword">extern</span> <a class="code" href="structln__lattice__s.html">ln_lattice</a> <a class="code" href="latticenoise_8h.html#aaf06534159637c1d6bfbdb086ea25c9d">ln_lattice_new</a>(</div>
+<div class="line"><a name="l00161"></a><span class="lineno">  161</span>&#160;    <span class="keywordtype">int</span> dimensions, </div>
+<div class="line"><a name="l00162"></a><span class="lineno">  162</span>&#160;    <span class="keywordtype">int</span> dim_length, </div>
+<div class="line"><a name="l00163"></a><span class="lineno">  163</span>&#160;    <span class="keywordtype">int</span> seed, </div>
+<div class="line"><a name="l00164"></a><span class="lineno">  164</span>&#160;    <a class="code" href="structln__rng__func__def__s.html">ln_rng_func_def</a> rng_func);</div>
+<div class="line"><a name="l00165"></a><span class="lineno">  165</span>&#160;</div>
+<div class="line"><a name="l00170"></a><span class="lineno">  170</span>&#160;<span class="keyword">extern</span> <span class="keywordtype">void</span> <a class="code" href="latticenoise_8h.html#a2a52f21bd80ddb0fb314ceb6fa766a88">ln_lattice_free</a>(<a class="code" href="structln__lattice__s.html">ln_lattice</a> lattice);</div>
+<div class="line"><a name="l00171"></a><span class="lineno">  171</span>&#160;</div>
+<div class="line"><a name="l00179"></a><span class="lineno">  179</span>&#160;<span class="keyword">extern</span> <span class="keywordtype">float</span> <a class="code" href="latticenoise_8h.html#ae2f84ea3b89883b2e85f15c2004ed767">ln_lattice_value1</a>(<a class="code" href="structln__lattice__s.html">ln_lattice</a> lattice, <span class="keywordtype">int</span> x);</div>
+<div class="line"><a name="l00180"></a><span class="lineno">  180</span>&#160;</div>
+<div class="line"><a name="l00188"></a><span class="lineno">  188</span>&#160;<span class="keyword">extern</span> <span class="keywordtype">float</span> <a class="code" href="latticenoise_8h.html#ac832da8e4fe61ee4860fd7fb86c76384">ln_lattice_value2</a>(<a class="code" href="structln__lattice__s.html">ln_lattice</a> lattice, <span class="keywordtype">int</span> x, <span class="keywordtype">int</span> y);</div>
+<div class="line"><a name="l00189"></a><span class="lineno">  189</span>&#160;</div>
+<div class="line"><a name="l00197"></a><span class="lineno">  197</span>&#160;<span class="keyword">extern</span> <span class="keywordtype">float</span> <a class="code" href="latticenoise_8h.html#a5a58ddfa0a09a8aeb4834d110747bfc1">ln_lattice_value3</a>(<a class="code" href="structln__lattice__s.html">ln_lattice</a> lattice, <span class="keywordtype">int</span> x, <span class="keywordtype">int</span> y, <span class="keywordtype">int</span> z);</div>
+<div class="line"><a name="l00198"></a><span class="lineno">  198</span>&#160;</div>
+<div class="line"><a name="l00206"></a><span class="lineno">  206</span>&#160;<span class="keyword">extern</span> <span class="keywordtype">float</span> <a class="code" href="latticenoise_8h.html#a6aa13ddbf37349dcf6fd8baf354eca07">ln_lattice_value4</a>(<a class="code" href="structln__lattice__s.html">ln_lattice</a> lattice, <span class="keywordtype">int</span> x, <span class="keywordtype">int</span> y, <span class="keywordtype">int</span> z, <span class="keywordtype">int</span> w);</div>
+<div class="line"><a name="l00207"></a><span class="lineno">  207</span>&#160;</div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="latticenoise_8h.html">latticenoise.h</a></li>
-    <li class="footer">Generated on Thu Nov 29 2012 02:03:08 for latticenoise by
+    <li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a class="el" href="latticenoise_8h.html">latticenoise.h</a></li>
+    <li class="footer">Generated on Wed Jan 16 2013 04:40:42 for latticenoise by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.2 </li>
   </ul>

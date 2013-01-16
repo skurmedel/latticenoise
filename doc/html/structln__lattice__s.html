@@ -42,6 +42,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
+      <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
+      <li><a href="namespaces.html"><span>Namespaces</span></a></li>
       <li class="current"><a href="annotated.html"><span>Data&#160;Structures</span></a></li>
       <li><a href="files.html"><span>Files</span></a></li>
       <li>
@@ -66,6 +68,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
     <ul class="tablist">
       <li><a href="annotated.html"><span>Data&#160;Structures</span></a></li>
       <li><a href="classes.html"><span>Data&#160;Structure&#160;Index</span></a></li>
+      <li><a href="hierarchy.html"><span>Class&#160;Hierarchy</span></a></li>
       <li><a href="functions.html"><span>Data&#160;Fields</span></a></li>
     </ul>
   </div>
@@ -89,7 +92,7 @@ $(document).ready(function(){initNavTree('structln__lattice__s.html','');});
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Data Structures</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Typedefs</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Macros</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Data Structures</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Typedefs</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Macros</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(8)"><span class="SelectionMark">&#160;</span>Pages</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -112,15 +115,45 @@ $(document).ready(function(){initNavTree('structln__lattice__s.html','');});
 Data Fields</h2></td></tr>
 <tr class="memitem:ae2c4a32612e8caa268af840efafef669"><td class="memItemLeft" align="right" valign="top">float *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structln__lattice__s.html#ae2c4a32612e8caa268af840efafef669">values</a></td></tr>
 <tr class="separator:ae2c4a32612e8caa268af840efafef669"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a439227feff9d7f55384e8780cfc2eb82"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structln__lattice__s.html#a439227feff9d7f55384e8780cfc2eb82">size</a></td></tr>
-<tr class="separator:a439227feff9d7f55384e8780cfc2eb82"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad32f99afe1378fa6e44a94ebe202cb00"><td class="memItemLeft" align="right" valign="top">unsigned int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structln__lattice__s.html#ad32f99afe1378fa6e44a94ebe202cb00">dim_length</a></td></tr>
+<tr class="separator:ad32f99afe1378fa6e44a94ebe202cb00"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aac913b3a1f6ef005d66bf7a84428773e"><td class="memItemLeft" align="right" valign="top">unsigned int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structln__lattice__s.html#aac913b3a1f6ef005d66bf7a84428773e">size</a></td></tr>
+<tr class="separator:aac913b3a1f6ef005d66bf7a84428773e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1447ad288a0a73454510f5777bdc3ed1"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structln__lattice__s.html#a1447ad288a0a73454510f5777bdc3ed1">seed</a></td></tr>
 <tr class="separator:a1447ad288a0a73454510f5777bdc3ed1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a75acb87c71265cee172f20b4c9de34d0"><td class="memItemLeft" align="right" valign="top">unsigned short&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structln__lattice__s.html#a75acb87c71265cee172f20b4c9de34d0">dimensions</a></td></tr>
+<tr class="separator:a75acb87c71265cee172f20b4c9de34d0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Represents a lattice of random values. It contains the actual lattice as well as various metadata.</p>
-<p>The lattice is one-dimensional. </p>
+<div class="textblock"><p>Represents a noise lattice. </p>
 </div><h2 class="groupheader">Field Documentation</h2>
+<a class="anchor" id="ad32f99afe1378fa6e44a94ebe202cb00"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">unsigned int dim_length</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>The length of one side of the lattice. The lattice will always be square, cubic etc.</p>
+<p>This value can always be used to index into one dimension of the lattice, like so: index = val &amp; my_lattice.length; </p>
+
+</div>
+</div>
+<a class="anchor" id="a75acb87c71265cee172f20b4c9de34d0"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">unsigned short dimensions</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>The number of dimensions in the lattice. </p>
+
+</div>
+</div>
 <a class="anchor" id="a1447ad288a0a73454510f5777bdc3ed1"></a>
 <div class="memitem">
 <div class="memproto">
@@ -134,16 +167,16 @@ Data Fields</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a439227feff9d7f55384e8780cfc2eb82"></a>
+<a class="anchor" id="aac913b3a1f6ef005d66bf7a84428773e"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">int size</td>
+          <td class="memname">unsigned int size</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>The size of the lattice. </p>
+<p>Total number of values in the lattice, equal to pow(dim_length, n) where n is the number of dimensions of the lattice. </p>
 
 </div>
 </div>
@@ -156,12 +189,20 @@ Data Fields</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>The actual values. </p>
-
+<p>The actual values of the lattice.</p>
+<p>Methods are provided for accessing lattices up to 4 dimensions, but the library allows higher dimensions still.</p>
+<p>To access a value in a 5D library you'd calculate the final index as such: </p>
+<pre class="fragment">def val(x, y, z, w, q):
+    x = x
+    y = y * m
+    z = z * m * m
+    w = w * m * m * m
+    q = q * m * m * m * m
+    return lattice.values[x + y + z + w + q]</pre> 
 </div>
 </div>
 <hr/>The documentation for this struct was generated from the following file:<ul>
-<li><a class="el" href="latticenoise_8h_source.html">latticenoise.h</a></li>
+<li>src/<a class="el" href="latticenoise_8h_source.html">latticenoise.h</a></li>
 </ul>
 </div><!-- contents -->
 </div><!-- doc-content -->
@@ -169,7 +210,7 @@ Data Fields</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="structln__lattice__s.html">ln_lattice_s</a></li>
-    <li class="footer">Generated on Thu Nov 29 2012 02:03:08 for latticenoise by
+    <li class="footer">Generated on Wed Jan 16 2013 04:40:42 for latticenoise by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.2 </li>
   </ul>
