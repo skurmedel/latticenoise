@@ -122,6 +122,20 @@ typedef struct point_s
 // LATTICE FUNCTIONS.
 
 /**
+	Provides a custom RNG.
+*/
+typedef struct ln_rng_func_def_s
+{
+	/**
+		A custom RNG that gets passed the custom state on each subsequent call.
+
+		\return		a value between 0.0 and 1.0.
+	*/
+	float (*func)(void *state);
+	void *state;
+} ln_rng_func_def;
+
+/**
 	Creates a new lattice, allocates the memory needed and feeds it with values.
 	
 	\param	dimensions
@@ -135,6 +149,12 @@ typedef struct point_s
 					It is optional and may be set to 0, if so the function seeds 
 					the RNG itself.
 
+	\param	rng_func
+					A pointer to a ln_rng_func_def. 
+
+					This parameter is optional, leave it to NULL to use the default
+					C RNG.
+
 	\return 		A new lattice object on success.
 			 		NULL if:
 			 			dimensions < 1
@@ -142,7 +162,11 @@ typedef struct point_s
 						memory could not be allocated (out of memory.)
 
 */
-extern ln_lattice ln_lattice_new(int size, int seed);
+extern ln_lattice ln_lattice_new(
+	int dimensions, 
+	int dim_length, 
+	int seed, 
+	ln_rng_func_def rng_func);
 
 /**
 	Frees an allocated lattice. You should always call
@@ -185,7 +209,4 @@ extern float ln_lattice_value3(ln_lattice lattice, int x, int y, int z);
 					out of bounds.
 */
 extern float ln_lattice_value4(ln_lattice lattice, int x, int y, int z, int w);
-
-
-
 
