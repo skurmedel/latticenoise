@@ -53,7 +53,7 @@ typedef struct tga_data_s
 	uint8_t  bitdepth;
 } tga_data;
 
-uint64_t tga_len(uint16_t w, uint16_t h, uint8_t bitdepth)
+static uint64_t tga_len(uint16_t w, uint16_t h, uint8_t bitdepth)
 {
 	uint64_t bytespp = bitdepth == 24? 3 : 4;
 	uint64_t len = ((uint32_t) w) * ((uint32_t) h) * bytespp;
@@ -61,7 +61,7 @@ uint64_t tga_len(uint16_t w, uint16_t h, uint8_t bitdepth)
 }
 
 // bithdepth 24 or 32
-tga_data *tga_create(uint32_t w, uint32_t h, uint8_t bitdepth)
+static tga_data *tga_create(uint32_t w, uint32_t h, uint8_t bitdepth)
 {
 	if (bitdepth != 24 && bitdepth != 32)
 		return NULL;
@@ -85,14 +85,14 @@ tga_data *tga_create(uint32_t w, uint32_t h, uint8_t bitdepth)
 	return tga;
 }
 
-void tga_free(tga_data *tga)
+static void tga_free(tga_data *tga)
 {
 	if (tga != NULL)
 		free(tga->data);
 	free(tga);
 }
 
-void tga_write(tga_data *data, FILE *f)
+static void tga_write(tga_data *data, FILE *f)
 {
 	/* Write the header. */
 
