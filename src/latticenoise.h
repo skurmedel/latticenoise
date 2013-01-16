@@ -95,30 +95,6 @@ struct ln_lattice_s
 
 typedef ln_lattice_s *ln_lattice;
 
-// point3 TYPE.
-
-/**
-	Represents a three dimensional point in space.
-*/
-typedef struct point_s
-{
-	float x, y, z;
-} point3;
-
-/**
-	A simple vector addition.
-
-	\return			(point3){ p1.x + p2.x, p1.y + p2.y, p1.z + p2.z }
-*/
-#define point3_add(p1, p2) ((point3){p1.x + p2.x, p1.y + p2.y, p1.z + p2.z})
-
-/**
-	Prints a point3 to console, purely for debugging purposes.
-
-	No newline is written.
-*/
-#define point3_print(p1) printf("<%0.5f, %0.5f, %0.5f>", p1.x, p1.y, p1.z)
-
 // LATTICE FUNCTIONS.
 
 /**
@@ -204,4 +180,3 @@ extern float ln_lattice_value3(ln_lattice lattice, int x, int y, int z);
 					out of bounds.
 */
 extern float ln_lattice_value4(ln_lattice lattice, int x, int y, int z, int w);
-
