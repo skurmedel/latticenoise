@@ -88,7 +88,7 @@ ln_lattice ln_lattice_new(
 	if (lattice == NULL)
 		return NULL;
 
-	lattice->values = malloc(ulsize);
+	lattice->values = malloc(ulsize * sizeof(float));
 	if (lattice->values == NULL)
 		goto die_clean;
 	
@@ -122,6 +122,12 @@ die_clean:
 	lattice = NULL;
 
 	return lattice;
+}
+
+void ln_lattice_free(ln_lattice lattice)
+{
+	free(lattice->values);
+	free(lattice);
 }
 
 float ln_lattice_value1(
