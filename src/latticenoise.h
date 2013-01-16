@@ -93,7 +93,7 @@ struct ln_lattice_s
 	unsigned int dimensions;
 };
 
-typedef ln_lattice_s *ln_lattice;
+typedef struct ln_lattice_s *ln_lattice;
 
 // LATTICE FUNCTIONS.
 
@@ -140,7 +140,7 @@ typedef struct ln_rng_func_def_s
 extern ln_lattice ln_lattice_new(
 	unsigned int dimensions, 
 	unsigned int dim_length, 
-	ln_rng_func_def rng_func);
+	ln_rng_func_def *rng_func);
 
 /**
 	Frees an allocated lattice. You should always call

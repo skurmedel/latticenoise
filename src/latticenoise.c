@@ -34,4 +34,90 @@
 	Main implementation.
 */
 
+#include "latticenoise.h"
 #include "math.h"
+#include "stdlib.h"
+#include "limits.h"
+
+/* For seeding the default RNG. */
+#include "time.h"
+
+static float default_rng_func(void *state)
+{
+	return (float) rand() / (float) RAND_MAX;
+}
+
+static ln_rng_func_def default_rng()
+{
+	struct ln_rng_func_def_s def = {0};
+
+	time_t t = time(NULL);
+
+	def.func = &default_rng_func;
+	def.seed = (unsigned long) t * 241;
+	def.state = NULL;
+
+	srand(def.seed);
+
+	return def;
+}
+
+ln_lattice ln_lattice_new(
+	unsigned int dimensions, 
+	unsigned int dim_length,
+	ln_rng_func_def *rng_func)
+{
+	if (dimensions < 1 || dim_length < 1)
+		return NULL;
+
+	unsigned long long size = 1;
+	for (unsigned int i; i < dimensions; i++)
+	{
+		size *= (unsigned long long) dim_length;
+	}
+
+	if (size > UINT_MAX)
+		return NULL;
+
+	unsigned int ulsize = (unsigned int) size;
+
+	/* Set up the Lattice. */
+	ln_lattice lattice = malloc(sizeof(struct ln_lattice_s));
+	if (lattice == NULL)
+		return NULL;
+
+	lattice->values = malloc(ulsize);
+	if (lattice->values == NULL)
+		goto die_clean;
+	
+	/* only used if rng_func == NULL */
+	ln_rng_func_def default_rng_def = {0};
+	if (!rng_func)
+	{
+		default_rng_def = default_rng();
+		rng_func = &default_rng_def;
+	}
+
+	lattice->dimensions = dimensions;
+	lattice->dim_length = dim_length;
+	lattice->size = ulsize;
+	lattice->seed = rng_func->seed;
+
+	/* Initialize the values. */
+
+	for (unsigned int i = 0; i < ulsize; ++i)
+	{
+		float v = rng_func->func(rng_func->state);
+		lattice->values[i] = v;
+	}
+
+	return lattice;
+
+die_clean:
+	free(lattice->values);
+	free(lattice);
+
+	lattice = NULL;
+
+	return lattice;
+}
