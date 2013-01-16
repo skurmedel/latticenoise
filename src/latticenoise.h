@@ -113,6 +113,8 @@ typedef struct ln_rng_func_def_s
 
 /**
 	Creates a new lattice, allocates the memory needed and feeds it with values.
+
+	The lattice has an upper bound of (2 ^ 32) - 1 values.
 	
 	\param	dimensions
 					How many dimensions the lattice has. It must be >= 1.
@@ -130,6 +132,7 @@ typedef struct ln_rng_func_def_s
 			 		NULL if:
 			 			dimensions < 1
 						dim_length < 1
+						pow(dim_length, dimensions) > MAX(unsigned int)
 						memory could not be allocated (out of memory.)
 
 */
