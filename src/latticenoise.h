@@ -136,7 +136,7 @@ typedef struct ln_rng_func_def_s
 extern ln_lattice ln_lattice_new(
 	unsigned int dimensions, 
 	unsigned int dim_length, 
-	unsigned int seed, 
+	int seed, 
 	ln_rng_func_def rng_func);
 
 /**
