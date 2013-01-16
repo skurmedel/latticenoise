@@ -34,7 +34,134 @@
 	Implements the mknoise program that complements the latticenoise library.
 */
 
+#include "stdint.h"
+#include "stdio.h"
+#include "stdlib.h"
+
+typedef struct tga_data_s
+{
+	/* 
+		The image data is arranged from top left to bottom right,
+		BGRA (32 bit) or BGR (24 bit).
+
+		Thus data[0] is the blue byte of the topmost left corner.
+	*/
+	uint8_t  *data;
+	uint16_t width;
+	uint16_t height;
+	/* 24 or 32 (32 is with alpha mask.) */
+	uint8_t  bitdepth;
+} tga_data;
+
+uint64_t tga_len(uint16_t w, uint16_t h, uint8_t bitdepth)
+{
+	uint64_t bytespp = bitdepth == 24? 3 : 4;
+	uint64_t len = ((uint32_t) w) * ((uint32_t) h) * bytespp;
+	return len;
+}
+
+// bithdepth 24 or 32
+tga_data *tga_create(uint32_t w, uint32_t h, uint8_t bitdepth)
+{
+	if (bitdepth != 24 && bitdepth != 32)
+		return NULL;
+
+	tga_data *tga = malloc(sizeof(tga_data));
+	if (tga != NULL)
+	{
+		tga->width = w;
+		tga->height = h;
+		tga->bitdepth = bitdepth;
+
+		uint64_t len = tga_len(w, h, bitdepth);
+		tga->data = malloc(len);
+
+		if (tga->data == NULL)
+		{
+			free(tga);
+			tga = NULL;
+		}
+	}
+	return tga;
+}
+
+void tga_free(tga_data *tga)
+{
+	if (tga != NULL)
+		free(tga->data);
+	free(tga);
+}
+
+void tga_write(tga_data *data, FILE *f)
+{
+	/* Write the header. */
+
+	/* Identification field. */
+	/* We don't support the image identification field. */
+	putc(0, f);
+
+	/* Color map type. */
+	/* Always zero because we don't support color mapped images. */
+	putc(0, f);
+
+	/* Image type code. */
+	/* Always 2 since we only support uncompressed RGB. */
+	putc(2, f);
+
+	/*  Color map specification, not used. */
+	for (int i = 0; i < 5; i++)
+		putc(0, f);
+
+	/* X-origin. lo-hi 2 byte integer. */
+	putc(0, f); putc(0, f);
+
+	/* Y-origin. lo-hi 2 byte integer. */
+	putc(0, f); putc(0, f);
+
+	/* Image width. lo-hi 2 byte integer. */
+	putc(data->width & 0x00FF, f);
+	putc((data->width & 0xFF00) >> 8, f);
+
+	/* Image height. lo-hi 2 byte integer. */
+	putc(data->height & 0x00FF, f);
+	putc((data->height & 0xFF00) >> 8, f);
+
+	/* Image Pixel Size (amount of bits per pixel.) */
+	putc(data->bitdepth, f);
+
+	/* Image Descriptor Byte */
+	putc(0x20 | (data->bitdepth == 32? 0x08 : 0x00), f);
+
+	/* Write the image data. */
+	uint64_t len = tga_len(data->width, data->height, data->bitdepth);
+
+	for (uint64_t i = 0; i < len; ++i)
+	{
+		putc(data->data[i], f);
+	}
+}
+
 int main(int argc, char *argv[])
 {
+	tga_data *tga = tga_create(128, 128, 24);
+
+	uint64_t len = tga_len(tga->width, tga->height, tga->bitdepth);
+	for (uint64_t i = 0; i < len; i++)
+	{
+		uint8_t v = (i % 8) * 32;
+		tga->data[i] = v;
+	}
+
+	/* Mark upper left corner red. */
+	tga->data[0] = 0x00;
+	tga->data[1] = 0x00;
+	tga->data[2] = 0xFF;
+
+	FILE *f = fopen("test.tga", "wb");
+
+	tga_write(tga, f);
+
+	fclose(f);
+
 	return 0;
 }
