@@ -141,7 +141,7 @@ static void tga_write(tga_data *data, FILE *f)
 	}
 }
 
-int main(int argc, char *argv[])
+void tga_test()
 {
 	tga_data *tga = tga_create(128, 128, 24);
 
@@ -164,6 +164,11 @@ int main(int argc, char *argv[])
 	tga_free(tga);
 
 	fclose(f);
+}
+
+int main(int argc, char *argv[])
+{
+	tga_test();
 
 	return 0;
 }
