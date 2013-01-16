@@ -161,6 +161,8 @@ int main(int argc, char *argv[])
 
 	tga_write(tga, f);
 
+	tga_free(tga);
+
 	fclose(f);
 
 	return 0;
