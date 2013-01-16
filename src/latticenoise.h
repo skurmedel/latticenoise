@@ -199,3 +199,9 @@ extern float ln_lattice_value4(
 	unsigned int y, 
 	unsigned int z, 
 	unsigned int w);
+
+static float lerp(a, b, r)
+{
+	return a + r * (b - a);
+}
+
