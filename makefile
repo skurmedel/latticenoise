@@ -1,16 +1,15 @@
-CFLAGS=--std=c99 -Wall 
+CC=gcc $(CFLAGS) 
+CFLAGS=--std=c99 -Wall
 
+all: exe
 
-all: lib exe
-
-lib:
-	setup
-	CC -c src/latticenoise.c -o build/latticenoise.o
-	ar rcs bin/liblatticenoise.lib build/latticenoise.o
+lib: setup	
+	$(CC) -c src/latticenoise.c -o build/latticenoise.o
+	ar rs bin/liblatticenoise.a build/latticenoise.o
 
 exe: lib
-	CFLAGS+= -Lbin/ -llatticenoise
-	CC -static src/mknoise.c -o bin/mknoise
+	$(CC) -c src/mknoise.c -o build/mknoise.o
+	$(CC) -static build/mknoise.o -o bin/mknoise -Lbin/ -llatticenoise
 
 setup:
 	@mkdir -p build
