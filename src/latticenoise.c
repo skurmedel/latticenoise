@@ -223,11 +223,11 @@ float ln_lattice_noise1d(ln_lattice lattice, float x)
 	int ix = ((int) lattice->dim_length - 1) + (int) x;
 	float r = x - (int) x;
 
-	// Sign no longer matters.
+	/* Sign no longer matters. */
 	int uix = (unsigned int) ix;
 
-	float v2 = ln_lattice_value1(lattice, (uix + 1) % lattice->dim_length);
 	float v1 = ln_lattice_value1(lattice,  uix      % lattice->dim_length);
+	float v2 = ln_lattice_value1(lattice, (uix + 1) % lattice->dim_length);
 
 	return lerp(v1, v2, r);
 }
