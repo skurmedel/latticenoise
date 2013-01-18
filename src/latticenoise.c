@@ -212,7 +212,7 @@ float ln_lattice_noise1d(ln_lattice lattice, float x)
 
 		So we instead do:
 
-			(dim_length - 1) + x = 5
+			dim_length + x = 5
 
 		If x is positive, the value will of course become bigger than 
 		dim_length, but that is no problem, we simply wrap with modulus.
@@ -224,12 +224,36 @@ float ln_lattice_noise1d(ln_lattice lattice, float x)
 	float r = x - (int) x;
 
 	/* Sign no longer matters. */
-	int uix = (unsigned int) ix;
+	unsigned int uix = (unsigned int) ix;
 
 	float v1 = ln_lattice_value1(lattice,  uix      % lattice->dim_length);
 	float v2 = ln_lattice_value1(lattice, (uix + 1) % lattice->dim_length);
 
 	return lerp(v1, v2, r);
+}
+
+float ln_lattice_noise2d(ln_lattice lattice, float x, float y)
+{
+	int ix = ((int) lattice->dim_length) + (int) x;
+	int iy = ((int) lattice->dim_length) + (int) y;
+	
+	float r1 = x - (int) x;
+	float r2 = y - (int) y;
+
+	unsigned int uix  = ((unsigned int) ix) % lattice->dim_length;
+	unsigned int uix1 = (uix + 1) % lattice->dim_length;
+	unsigned int uiy  = ((unsigned int) iy) % lattice->dim_length;
+	unsigned int uiy1 = (uiy + 1) % lattice->dim_length;
+
+	float x0y0 = ln_lattice_value2(lattice, uix,  uiy);
+	float x0y1 = ln_lattice_value2(lattice, uix,  uiy1);
+	float x1y0 = ln_lattice_value2(lattice, uix1, uiy);
+	float x1y1 = ln_lattice_value2(lattice, uix1, uiy1);
+	
+	float v1 = lerp(x0y0, x1y0, r1);
+	float v2 = lerp(x0y1, x1y1, r1);
+
+	return lerp(v1, v2, r2);
 }
 
 static float lerp(float a, float b, float r)

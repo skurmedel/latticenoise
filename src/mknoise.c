@@ -224,8 +224,62 @@ die_horribly:
 
 int main(int argc, char *argv[])
 {
-	ln_lattice lattice = ln_lattice_new(2, 128, NULL);
-	test_write_lattice(lattice);
+	ln_lattice lattice = ln_lattice_new(2, 32, NULL);
+	
+	tga_data *tga = tga_create(128, 128, 24);
+
+	uint64_t len = tga_len(128, 128, 24) / 3;
+	
+	float *vals = malloc(len * 3 * sizeof(float));
+	if (vals == NULL)
+	{
+		puts("Out of memory.");
+		abort();
+	}
+
+	float maxN = 1.0;
+	for (uint64_t i = 0; i < len; ++i)
+	{
+		uint64_t offset = i * 3;
+		float x = ((float) (i % 128)) / 4.0f;
+		float y = ((float) (i / 128)) / 4.0f;
+
+		float n = 
+			ln_lattice_noise2d(lattice, x, y) 
+			+ (ln_lattice_noise2d(lattice, x * 2, y * 2) / 2)
+			+ (ln_lattice_noise2d(lattice, x / 4, y / 4) * 4);
+		if (n == INFINITY)
+			puts("Bug in ln_lattice_noise2d somewhere.");
+		if (n > maxN)
+			maxN = n;
+		vals[offset] = n;
+		vals[offset+1] = n;
+		vals[offset+2] = n;
+	}
+
+	/* We are no longer in the [0.0, 1.0) range, so we'll have to
+	   scale the range back to 0.0 - 1.0. */
+	float rescale = 1.0 / maxN;
+	for (uint64_t i = 0; i < len; ++i)
+	{
+		uint64_t offset = i * 3;
+		float v = vals[offset] * rescale;
+		uint8_t x = (uint8_t)(v * 255.f);
+		tga->data[offset] =   x;
+		tga->data[offset+1] = x;
+		tga->data[offset+2] = x;
+	}
+
+	free(vals);
+
+	FILE *f = fopen("test.tga", "wb");
+
+	tga_write(tga, f);
+
+	tga_free(tga);
+
+	fclose(f);
+
 	ln_lattice_free(lattice);
 
 	return 0;
