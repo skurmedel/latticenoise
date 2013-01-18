@@ -42,6 +42,11 @@
 /* For seeding the default RNG. */
 #include "time.h"
 
+/* Some pre-declares. */
+static float lerp(float, float, float);
+
+
+/* rng_func_def that uses the stdlib RNG. */
 static float default_rng_func(void *state)
 {
 	return (float) rand() / (float) RAND_MAX;
@@ -189,4 +194,9 @@ float ln_lattice_value4(
 		+ (z * lattice->dim_length * lattice->dim_length) 
 		+ (y * lattice->dim_length) 
 		+ x];
+}
+
+static float lerp(float a, float b, float r)
+{
+	return a + r * (b - a);
 }
