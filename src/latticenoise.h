@@ -210,8 +210,8 @@ extern float ln_lattice_noise1d(ln_lattice lattice, float x);
 
 /**
 	Gets an interpolated noise value at coordinate (x, y), if x > dim_length or 
-	x < dim_length (same for y.), it wraps around, so the lattice 
-	repeats infinitely in 2D-space.
+	x < dim_length (same for y), it wraps around, so the lattice repeats infinitely 
+	in 2D-space.
 
 	Currently the interpolation is bilinear, but will be bicubic in the future.
 */
