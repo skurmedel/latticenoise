@@ -196,7 +196,44 @@ float ln_lattice_value4(
 		+ x];
 }
 
+float ln_lattice_noise1d(ln_lattice lattice, float x)
+{
+	/*
+		If x is minus, we must turn it into the "correct" offset,
+		we can't just discard the sign, for example:
+
+			x = -4
+			dim_length = 10
+
+			abs(x) = 4
+
+		But we want an infinitely repeating lattice, and if x is negative
+		it should point to element #6 in the lattice.
+
+		So we instead do:
+
+			(dim_length - 1) + x = 5
+
+		If x is positive, the value will of course become bigger than 
+		dim_length, but that is no problem, we simply wrap with modulus.
+
+		We also remove the fractional part, we'll use that for interpolation
+		later on.
+	*/
+	int ix = ((int) lattice->dim_length - 1) + (int) x;
+	float r = x - (int) x;
+
+	// Sign no longer matters.
+	int uix = (unsigned int) ix;
+
+	float v2 = ln_lattice_value1(lattice, (uix + 1) % lattice->dim_length);
+	float v1 = ln_lattice_value1(lattice,  uix      % lattice->dim_length);
+
+	return lerp(v1, v2, r);
+}
+
 static float lerp(float a, float b, float r)
 {
 	return a + r * (b - a);
 }
+
