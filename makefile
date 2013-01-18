@@ -1,6 +1,13 @@
 CC=gcc $(CFLAGS) 
 CFLAGS=--std=c99 -Wall
 
+DEBUG ?= 0
+ifeq ($(DEBUG), 1)
+	CFLAGS += -DDEBUG -g
+else
+	CFLAGS += -O2
+endif
+
 all: exe
 
 lib: setup	
