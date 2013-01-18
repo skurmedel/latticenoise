@@ -78,7 +78,7 @@ ln_lattice ln_lattice_new(
 	/* We simply use a bigger datatype here and avoid lengthy overflow
 	   checks. */
 	unsigned long long size = 1;
-	for (unsigned int i; i < dimensions; i++)
+	for (unsigned int i = 0; i < dimensions; i++)
 	{
 		size *= (unsigned long long) dim_length;
 	}
