@@ -220,7 +220,7 @@ float ln_lattice_noise1d(ln_lattice lattice, float x)
 		We also remove the fractional part, we'll use that for interpolation
 		later on.
 	*/
-	int ix = ((int) lattice->dim_length - 1) + (int) x;
+	int ix = ((int) lattice->dim_length) + (int) x;
 	float r = x - (int) x;
 
 	/* Sign no longer matters. */
