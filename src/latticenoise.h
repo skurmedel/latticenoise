@@ -49,7 +49,7 @@ struct ln_lattice_s
 		Methods are provided for accessing lattices up to 4 dimensions, but the 
 		library allows higher dimensions still.
 
-		To access a value in a 5D library you'd calculate the final index as such:
+		To access a value in a 5D lattice you'd calculate the final index as such:
 
 			def val(x, y, z, w, q):
 				x = x
