@@ -159,7 +159,38 @@ static void tga_write(tga_data *data, FILE *f)
 	ARGUMENT PARSING.
    ---------------------------------*/
 
+uint32_t utf8_strlen(char *str) 
+{
+  uint32_t i = 0, j = 0;
+  while (str[i]) 
+  {
+    if ((str[i] & 0xc0) != 0x80) 
+    	j++;
+    i++;
+  }
+  return j;
+}
 
+typedef	struct mknoise_args_s
+{
+	char     outpath[0xFFF];
+	/* Image width. */
+	uint32_t width;
+	/* Image height. */
+	uint32_t height;
+	/* Length of output path. */
+	uint16_t outpath_len;
+	/* Value to seed the RNG with. */
+	uint32_t seed;
+} mknoise_args;
+
+bool parse_args(int argc, char *argv[], mknoise_args *output)
+{
+	if (argc < 3)
+	{
+		return 0;
+	}
+}
 
 /* -----------------------------------
 	TEST FUNCTIONS. 
