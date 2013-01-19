@@ -42,6 +42,16 @@
 
 #include "latticenoise.h"
 
+#define PRINTERRF(...) fprintf(stderr, __VA_ARGS__)
+#define ABORTIF(expr, ...) \
+	if ((expr)) \
+	{ \
+		PRINTERRF(__VA_ARGS__); abort(); \
+	}
+
+/* -----------------------------------
+	TGA FUNCTIONS. 
+   ---------------------------------*/
 typedef struct tga_data_s
 {
 	/* 
@@ -145,6 +155,15 @@ static void tga_write(tga_data *data, FILE *f)
 	}
 }
 
+/* -----------------------------------
+	ARGUMENT PARSING.
+   ---------------------------------*/
+
+
+
+/* -----------------------------------
+	TEST FUNCTIONS. 
+   ---------------------------------*/
 static void tga_test()
 {
 	tga_data *tga = tga_create(128, 128, 24);
@@ -231,11 +250,7 @@ int main(int argc, char *argv[])
 	uint64_t len = tga_len(128, 128, 24) / 3;
 	
 	float *vals = malloc(len * 3 * sizeof(float));
-	if (vals == NULL)
-	{
-		puts("Out of memory.");
-		abort();
-	}
+	ABORTIF(vals == NULL, "Out of memory.\n");
 
 	float maxN = 1.0;
 	for (uint64_t i = 0; i < len; ++i)
