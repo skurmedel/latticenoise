@@ -43,8 +43,8 @@
 #include "time.h"
 
 /* Some pre-declares. */
-static float lerp(float, float, float);
-
+inline static float lerp(float, float, float);
+inline static float catmull_rom(float p0, float p1, float p2, float p3, float x);
 
 /* rng_func_def that uses the stdlib RNG. */
 static float default_rng_func(void *state)
@@ -196,64 +196,93 @@ float ln_lattice_value4(
 		+ x];
 }
 
+/*
+	If x is minus, we must turn it into the "correct" offset,
+	we can't just discard the sign, for example:
+
+		x = -4
+		dim_length = 10
+
+		abs(x) = 4
+
+	But we want an infinitely repeating lattice, and if x is negative
+	it should point to element #6 in the lattice.
+
+	So we instead do:
+
+		dim_length + x = 5
+
+	If x is positive, the value will of course become bigger than 
+	dim_length, but that is no problem, we simply wrap with modulus.
+
+	We also remove the fractional part, we'll use that for interpolation
+	later on.
+*/
+#define FLOAT_TO_OFFSET(x) (((int) lattice->dim_length) + (int) (x))
+#define WRAP(offset) ((offset) % lattice->dim_length)
+
 float ln_lattice_noise1d(ln_lattice lattice, float x)
 {
-	/*
-		If x is minus, we must turn it into the "correct" offset,
-		we can't just discard the sign, for example:
-
-			x = -4
-			dim_length = 10
-
-			abs(x) = 4
-
-		But we want an infinitely repeating lattice, and if x is negative
-		it should point to element #6 in the lattice.
-
-		So we instead do:
-
-			dim_length + x = 5
-
-		If x is positive, the value will of course become bigger than 
-		dim_length, but that is no problem, we simply wrap with modulus.
-
-		We also remove the fractional part, we'll use that for interpolation
-		later on.
-	*/
-	int ix = ((int) lattice->dim_length) + (int) x;
+	int ix = FLOAT_TO_OFFSET(x);
 	float r = x - (int) x;
 
 	/* Sign no longer matters. */
 	unsigned int uix = (unsigned int) ix;
 
-	float v1 = ln_lattice_value1(lattice,  uix      % lattice->dim_length);
-	float v2 = ln_lattice_value1(lattice, (uix + 1) % lattice->dim_length);
+	float p0 = ln_lattice_value1(lattice,  WRAP(uix - 1));
+	float p1 = ln_lattice_value1(lattice,  WRAP(uix));
+	float p2 = ln_lattice_value1(lattice,  WRAP(uix + 1));
+	float p3 = ln_lattice_value1(lattice,  WRAP(uix + 2));
 
-	return lerp(v1, v2, r);
+	return catmull_rom(p0, p1, p2, p3, r);
 }
 
 float ln_lattice_noise2d(ln_lattice lattice, float x, float y)
 {
-	int ix = ((int) lattice->dim_length) + (int) x;
-	int iy = ((int) lattice->dim_length) + (int) y;
+	int ix = FLOAT_TO_OFFSET(x);
+	int iy = FLOAT_TO_OFFSET(y);
 	
 	float r1 = x - (int) x;
 	float r2 = y - (int) y;
 
-	unsigned int uix  = ((unsigned int) ix) % lattice->dim_length;
-	unsigned int uix1 = (uix + 1) % lattice->dim_length;
-	unsigned int uiy  = ((unsigned int) iy) % lattice->dim_length;
-	unsigned int uiy1 = (uiy + 1) % lattice->dim_length;
+	unsigned int uix  = WRAP((unsigned int) ix);
+	unsigned int uiy  = WRAP((unsigned int) iy);
 
-	float x0y0 = ln_lattice_value2(lattice, uix,  uiy);
-	float x0y1 = ln_lattice_value2(lattice, uix,  uiy1);
-	float x1y0 = ln_lattice_value2(lattice, uix1, uiy);
-	float x1y1 = ln_lattice_value2(lattice, uix1, uiy1);
-	
-	float v1 = lerp(x0y0, x1y0, r1);
-	float v2 = lerp(x0y1, x1y1, r1);
+	float v[4] = {0, 0, 0, 0};
 
-	return lerp(v1, v2, r2);
+	size_t curr = 0;
+	unsigned int y_base = WRAP(uiy - 1);
+	for (unsigned int i = 0; i < 4; ++i)
+	{
+		y_base = WRAP(y_base + 1);
+		float p0 = ln_lattice_value2(lattice, WRAP(uix - 1),  y_base);
+		float p1 = ln_lattice_value2(lattice, WRAP(uix),      y_base);
+		float p2 = ln_lattice_value2(lattice, WRAP(uix + 1),  y_base);
+		float p3 = ln_lattice_value2(lattice, WRAP(uix + 2),  y_base);
+		v[curr++] = catmull_rom(p0, p1, p2, p3, r1);
+	}
+
+	return catmull_rom(v[0], v[1], v[2], v[3], r2);
+}
+
+inline static float catmull_rom(
+	float p0, 
+	float p1, 
+	float p2, 
+	float p3, 
+	float x)
+{
+	float f0 = p1, f1 = p2;
+	float fd0 = (p2 - p0) / 2, fd1 = (p3 - p1) / 2;
+
+	float a = (2 * f0)  - (2 * f1) + fd0 + fd1;
+	float b = (-3 * f0) + (3 * f1) - (2 * fd0) - fd1;
+	float c = fd0;
+	float d = f0;
+
+	float x2 = x * x; float x3 = x2 * x;
+
+	return a * x3 + b * x2 + c * x + d;
 }
 
 static float lerp(float a, float b, float r)

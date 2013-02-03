@@ -1,30 +1,31 @@
 /*
-	Copyright (c) 2012, Simon Otter
+	2012, Simon Otter
 	All rights reserved.
 
-	Redistribution and use in source and binary forms, with or without
-	modification, are permitted provided that the following conditions are met: 
+	This is free and unencumbered software released into the public domain.
 
-	1. Redistributions of source code must retain the above copyright notice, this
-	   list of conditions and the following disclaimer. 
-	2. Redistributions in binary form must reproduce the above copyright notice,
-	   this list of conditions and the following disclaimer in the documentation
-	   and/or other materials provided with the distribution. 
+	Anyone is free to copy, modify, publish, use, compile, sell, or
+	distribute this software, either in source code form or as a compiled
+	binary, for any purpose, commercial or non-commercial, and by any
+	means.
 
-	THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
-	ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
-	WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
-	DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR
-	ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
-	(INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
-	LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
-	ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-	(INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
-	SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+	In jurisdictions that recognize copyright laws, the author or authors
+	of this software dedicate any and all copyright interest in the
+	software to the public domain. We make this dedication for the benefit
+	of the public at large and to the detriment of our heirs and
+	successors. We intend this dedication to be an overt act of
+	relinquishment in perpetuity of all present and future rights to this
+	software under copyright law.
 
-	The views and conclusions contained in the software and documentation are those
-	of the authors and should not be interpreted as representing official policies, 
-	either expressed or implied, of the FreeBSD Project.
+	THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+	EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+	MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+	IN NO EVENT SHALL THE AUTHORS BE LIABLE FOR ANY CLAIM, DAMAGES OR
+	OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
+	ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
+	OTHER DEALINGS IN THE SOFTWARE.
+
+	For more information, please refer to <http://unlicense.org/>
 */
 
 /** \file
@@ -39,6 +40,7 @@
 #include "stdlib.h"
 
 #include "math.h"
+#include "time.h"
 
 #include "latticenoise.h"
 
@@ -184,14 +186,6 @@ typedef	struct mknoise_args_s
 	uint32_t seed;
 } mknoise_args;
 
-bool parse_args(int argc, char *argv[], mknoise_args *output)
-{
-	if (argc < 3)
-	{
-		return 0;
-	}
-}
-
 /* -----------------------------------
 	TEST FUNCTIONS. 
    ---------------------------------*/
@@ -272,36 +266,48 @@ die_horribly:
 	abort();
 }
 
-int main(int argc, char *argv[])
+void benchmark()
 {
-	ln_lattice lattice = ln_lattice_new(2, 32, NULL);
+	ln_lattice lattice = ln_lattice_new(2, 128, NULL);
 	
-	tga_data *tga = tga_create(128, 128, 24);
+	tga_data *tga = tga_create(4096, 4096, 24);
 
-	uint64_t len = tga_len(128, 128, 24) / 3;
+	uint64_t len = tga_len(tga->width, tga->height, 24) / 3;
 	
 	float *vals = malloc(len * 3 * sizeof(float));
 	ABORTIF(vals == NULL, "Out of memory.\n");
 
-	float maxN = 1.0;
-	for (uint64_t i = 0; i < len; ++i)
-	{
-		uint64_t offset = i * 3;
-		float x = ((float) (i % 128)) / 4.0f;
-		float y = ((float) (i / 128)) / 4.0f;
+	printf("Benchmarking started...\n");
 
-		float n = 
-			ln_lattice_noise2d(lattice, x, y) 
-			+ (ln_lattice_noise2d(lattice, x * 2, y * 2) / 2)
-			+ (ln_lattice_noise2d(lattice, x / 4, y / 4) * 4);
-		if (n == INFINITY)
-			puts("Bug in ln_lattice_noise2d somewhere.");
-		if (n > maxN)
-			maxN = n;
-		vals[offset] = n;
-		vals[offset+1] = n;
-		vals[offset+2] = n;
+	float maxN = 1.0;
+
+	int loops = 10; double secs_acc = 0.0;
+	for (int loop_i = 0; loop_i < loops; ++loop_i)
+	{
+		clock_t start, end;
+		start = clock();
+
+		for (uint64_t i = 0; i < len; ++i)
+		{
+			uint64_t offset = i * 3;
+			float x = ((float) (i % 4096)) / 4.0f;
+			float y = ((float) (i / 4096)) / 4.0f;
+
+			float n = 
+				ln_lattice_noise2d(lattice, x, y);
+			if (n == INFINITY)
+				puts("Bug in ln_lattice_noise2d somewhere.");
+			if (n > maxN)
+				maxN = n;
+			vals[offset] = n;
+			vals[offset+1] = n;
+			vals[offset+2] = n;
+		}
+		end = clock();
+		secs_acc += ((double) (end - start)) / CLOCKS_PER_SEC;
 	}
+
+	printf("Average Seconds Spent: %f.\n", secs_acc / loops);
 
 	/* We are no longer in the [0.0, 1.0) range, so we'll have to
 	   scale the range back to 0.0 - 1.0. */
@@ -327,6 +333,11 @@ int main(int argc, char *argv[])
 	fclose(f);
 
 	ln_lattice_free(lattice);
+}
+
+int main(int argc, char *argv[])
+{
+	benchmark();
 
 	return 0;
 }

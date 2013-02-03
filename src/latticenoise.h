@@ -38,6 +38,9 @@
 	Perlin Noise and Turbulence.
 */
 
+#ifndef LATTICENOISE_H
+#define LATTICENOISE_H
+
 /**
 	Represents a noise lattice.
 */
@@ -204,7 +207,7 @@ extern float ln_lattice_value4(
 	Gets an interpolated noise value at coordinate x, if x > dim_length or 
 	x < dim_length, it wraps around, so the lattice repeats infinitely.
 
-	Currently the interpolation is linear, but will be cubic in the future.
+	Uses cubic interpolation.
 */
 extern float ln_lattice_noise1d(ln_lattice lattice, float x);
 
@@ -213,6 +216,8 @@ extern float ln_lattice_noise1d(ln_lattice lattice, float x);
 	x < dim_length (same for y), it wraps around, so the lattice repeats infinitely 
 	in 2D-space.
 
-	Currently the interpolation is bilinear, but will be bicubic in the future.
+	Uses cubic interpolation.
 */
 extern float ln_lattice_noise2d(ln_lattice lattice, float x, float y);
+
+#endif
