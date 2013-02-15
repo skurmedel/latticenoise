@@ -220,4 +220,40 @@ extern float ln_lattice_noise1d(ln_lattice lattice, float x);
 */
 extern float ln_lattice_noise2d(ln_lattice lattice, float x, float y);
 
+/*
+	Defines the options for a fractal sum operation.
+
+	A fractal sum samples the noise lattice octave times according to the
+	following formula:
+
+		offset + noise(p) + 1/2noise(2p) + 1/4noise(4p) ...
+
+	Where p is a point in space and noise is the noise sampling function,
+	for example ln_lattice_noise2d.
+*/
+typedef struct ln_fsum_options_s
+{
+	/*
+		Number of terms in the fractal sum.
+
+		Anything < 1 is illegal.
+	*/
+	unsigned int octaves;
+	/*	
+		A kind of scale on the fractal sum.
+
+		It is multiplied with the amplitude of each term.
+
+		For example, for octaves = 2, amplitude 0.5:
+
+			(amplitude_ratio)noise(p) + (amplitude_ratio * 1/2)noise(2p)
+
+	*/
+	float amplitude_ratio;
+	/*	
+		A simple offset term. Added to the fractal sum.
+	*/
+	float offset;
+} ln_fsum_options;
+
 #endif

@@ -35,12 +35,12 @@
 */
 
 #include "latticenoise.h"
-#include "math.h"
-#include "stdlib.h"
-#include "limits.h"
+#include <math.h>
+#include <stdlib.h>
+#include <limits.h>
 
 /* For seeding the default RNG. */
-#include "time.h"
+#include <time.h>
 
 /* Some pre-declares. */
 inline static float lerp(float, float, float);
@@ -117,9 +117,9 @@ ln_lattice ln_lattice_new(
 		float v = rng_func->func(rng_func->state);
 		lattice->values[i] = v;
 	}
-
+	
 	return lattice;
-
+	
 die_clean:
 	free(lattice->values);
 	free(lattice);
