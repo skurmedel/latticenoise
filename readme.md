@@ -7,7 +7,7 @@ Current Status
 --------------
 
 There are functions for creating and destroying a lattice, and retrieving raw values
-from it in 1D, 2D, 3D and 4D.
+from it in 1D, 2D and 3D.
 
 About the code
 -------------
