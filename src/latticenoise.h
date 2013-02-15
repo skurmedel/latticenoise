@@ -100,7 +100,10 @@ struct ln_lattice_s
 
 typedef struct ln_lattice_s *ln_lattice;
 
-// LATTICE FUNCTIONS.
+/* 
+	GENERAL FUNCTIONS.
+	---------------------------------------------------------------------------------
+*/
 
 /**
 	Provides a custom RNG.
@@ -219,6 +222,11 @@ extern float ln_lattice_noise1d(ln_lattice lattice, float x);
 	Uses cubic interpolation.
 */
 extern float ln_lattice_noise2d(ln_lattice lattice, float x, float y);
+
+/* 
+	FRACTAL SUMS. 
+	---------------------------------------------------------------------------------
+*/
 
 /*
 	Defines the options for a fractal sum operation.
