@@ -257,7 +257,7 @@ typedef struct ln_fsum_options_s
 			(amplitude_ratio)noise(p) + (amplitude_ratio * 1/2)noise(2p)
 
 	*/
-	float amplitude_ratio;
+	float amplitude_ratio ;
 	/*	
 		A simple offset term. Added to the fractal sum.
 	*/
