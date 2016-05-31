@@ -25,8 +25,7 @@ The code is standard complaint C99 code.
 Documentation
 -------------
 
-Simple 1D noise
-'''''''''''''''
+### Simple 1D noise
 ```
 // Use a size 64 lattice for noise lookups with default PRNG.
 ln_lattice lattice = ln_lattice_new(1, 64, NULL);
@@ -36,8 +35,7 @@ float v = ln_lattice_noise1d(lattice, 0.5f * 64.0f);
 ln_lattice_free(lattice);
 ```
 
-2D Fractal Noise
-''''''''''''''''
+### 2D Fractal Noise
 ```
 ln_lattice lattice = ln_lattice_new(2, 64, NULL);
 
