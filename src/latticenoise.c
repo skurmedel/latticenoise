@@ -45,6 +45,7 @@
 /* Some pre-declares. */
 inline static float lerp(float, float, float);
 inline static float catmull_rom(float p0, float p1, float p2, float p3, float x);
+inline static float hermite01(float p0, float m0, float p1, float m1, float t);
 
 /* rng_func_def that uses the stdlib RNG. */
 static float default_rng_func(void *state)
@@ -65,6 +66,15 @@ static ln_rng_func_def default_rng()
 	srand(def.seed);
 
 	return def;
+}
+
+inline float clamp01(float v)
+{
+	if (v < 0.0f)
+		return 0.0f;
+	if (v > 1.0f)
+		return 1.0f;
+	return v;
 }
 
 ln_lattice ln_lattice_new(
@@ -115,7 +125,7 @@ ln_lattice ln_lattice_new(
 	for (unsigned int i = 0; i < ulsize; ++i)
 	{
 		float v = rng_func->func(rng_func->state);
-		lattice->values[i] = v;
+		lattice->values[i] = clamp01(v);
 	}
 	
 	return lattice;
@@ -254,15 +264,112 @@ float ln_lattice_noise2d(ln_lattice lattice, float x, float y)
 	unsigned int y_base = WRAP(uiy - 1);
 	for (unsigned int i = 0; i < 4; ++i)
 	{
-		y_base = WRAP(y_base + 1);
 		float p0 = ln_lattice_value2(lattice, WRAP(uix - 1),  y_base);
 		float p1 = ln_lattice_value2(lattice, WRAP(uix),      y_base);
 		float p2 = ln_lattice_value2(lattice, WRAP(uix + 1),  y_base);
 		float p3 = ln_lattice_value2(lattice, WRAP(uix + 2),  y_base);
+#ifdef LN_DEFAULT_HERMITE_INTERPOLATION
+		/* 
+			We use the slope between p0, p2 and p1, p3 here as tangents.
+			It gives a reasonably smooth "continous" interpolation.
+		*/
+		v[curr++] = hermite01(p1, (p2 - p0) / 3.0f, p2, (p3 - p1) / 3.0f, r1);
+#else
+		/* 
+			For Catmull-Rom we just use the samples as four points.
+			
+			The Catmull-Rom interpolation is guaranteed to go through the 
+			points.
+		*/
 		v[curr++] = catmull_rom(p0, p1, p2, p3, r1);
+#endif
+		y_base = WRAP(y_base + 1);
 	}
 
-	return catmull_rom(v[0], v[1], v[2], v[3], r2);
+	/*
+		We can actually wind up with values outside [0.0, 1.0] here so we clamp 
+		the value and hope for the best.
+	*/
+#ifdef LN_DEFAULT_HERMITE_INTERPOLATION
+	return clamp01(hermite01(v[1], (v[2] - v[0]) / 3.0f, v[2], (v[3] - v[1]) / 3.0f, r2));
+#else
+	return clamp01(catmull_rom(v[0], v[1], v[2], v[3], r2));
+#endif
+}
+
+ln_fsum_options ln_default_fsum_options()
+{
+	ln_fsum_options options;
+	options.n = 4;
+	options.amplitude_ratio = 0.5f;
+	options.frequency_ratio = 2.0f;
+	options.offset = 0.0f;
+	return options;
+}
+
+#define FSUM_IMPLEMENTATION(call, dims)\
+	if (opt->n < 1 || lattice->dimensions != (dims))\
+		return INFINITY;\
+	\
+	float result = opt->offset;\
+	\
+	float a = 1;\
+	float f = 1;\
+	for (unsigned int i = 0; i < opt->n; ++i)\
+	{		 \
+		result += a * (call);\
+		a *= opt->amplitude_ratio;\
+		f *= opt->frequency_ratio;\
+	}\
+	return result;\
+
+
+float ln_lattice_fsum1d(ln_lattice lattice, float x, ln_fsum_options const *opt)
+{
+	FSUM_IMPLEMENTATION(ln_lattice_noise1d(lattice, f * x), 1)
+}
+
+float ln_lattice_fsum2d(ln_lattice lattice, float x, float y, ln_fsum_options const *opt)
+{
+	FSUM_IMPLEMENTATION(ln_lattice_noise2d(lattice, f * x, f * y), 2)
+}
+
+float ln_fsum_max_value(ln_fsum_options const *opt)
+{
+	if (opt->n < 1)
+		return INFINITY;
+	float v = opt->offset;
+	/*
+		In the algorithm above, we always add one term with 1.0f amplitude.
+	*/
+	v += 1.0f;
+	/* 
+		The maximum posssible value the fractal sum methods would output is the 
+		one where each call to ln_lattice_noise* returns a 1.0f.
+		
+		That is:
+			0 <= ln_lattice_noise* <= 1.0f 
+		which means that 
+			ln_lattice_noise* + ln_lattice_noise* + ... <= 1.0 + 1.0 + ... 
+		
+		So with r = amplitude_ratio and f = frequency_ratio we have 
+			r^i * ln_lattice_noise*(f^i p) <= r^i * 1.0  
+					
+		The amplitude_ratios form a geometric series if n is allowed to be 
+		infinite, but of course opt->n is finite so we don't have to worry about
+		convergence. It will always have a well-defined value.
+		
+		We can use the formula for the n first elements of a geometric series 
+		to obtain the exact value, unless amplitude_ratio is 1.0.
+		
+		If amplitude_ratio is 1.0 the result is just 1.0 * opt->n.
+	*/
+	float r = opt->amplitude_ratio;
+	if (r != 1.0f)
+		v = (1.0f - powf(r, opt->n)) / (1.0f - r);
+	else
+		v = opt->n; 
+	return v;
 }
 
 inline static float catmull_rom(
@@ -283,6 +390,21 @@ inline static float catmull_rom(
 	float x2 = x * x; float x3 = x2 * x;
 
 	return a * x3 + b * x2 + c * x + d;
+}
+
+inline static float hermite01(
+	float p0,
+	float m0,
+	float p1,
+	float m1,
+	float t)
+{
+	float h00 = 2.0f * t * t * t - 3.0f * t * t + 1;
+	float h10 = t * t * t - 2.0f * t * t + t;
+	float h01 = t * t * (3.0f - 2.0f * t);
+	float h11 = t * t * (t - 1.0f);
+	
+	return h00 * p0 + h10 * m0 + h01 * p1 + h11 * m1;
 }
 
 static float lerp(float a, float b, float r)

@@ -35,14 +35,21 @@
 	Implements the mknoise program that complements the latticenoise library.
 */
 
-#include "stdint.h"
-#include "stdio.h"
-#include "stdlib.h"
+#include <stdint.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <ctype.h>
 
-#include "math.h"
-#include "time.h"
+#include <math.h>
+#include <time.h>
 
 #include "latticenoise.h"
+
+#define STB_IMAGE_WRITE_IMPLEMENTATION
+#include "stb_image_write.h"
+
+#include "parg.h"
 
 #define PRINTERRF(...) fprintf(stderr, __VA_ARGS__)
 #define ABORTIF(expr, ...) \
@@ -173,9 +180,23 @@ uint32_t utf8_strlen(char *str)
   return j;
 }
 
+#define NOISE_METHOD_PERLIN		0
+#define NOISE_METHOD_FSUM		1
+
+#define NOISE_FORMAT_UNKNOWN	0
+#define NOISE_FORMAT_JPEG		1
+#define NOISE_FORMAT_PNG		2
+#define NOISE_FORMAT_TGA		3
+#define NOISE_FORMAT_BMP		4
+
+
 typedef	struct mknoise_args_s
 {
-	char     outpath[0xFFF];
+	/* Whether to run benchmark instead. */
+	uint32_t benchmark;
+	/* Method to use for noise creation. */
+	uint32_t method;
+	char     outpath[0xFFF];	
 	/* Image width. */
 	uint32_t width;
 	/* Image height. */
@@ -184,7 +205,130 @@ typedef	struct mknoise_args_s
 	uint16_t outpath_len;
 	/* Value to seed the RNG with. */
 	uint32_t seed;
+	/* File format. */
+	uint8_t	format;	
+	/* Scale for the lattice, basically how a pixel position maps to the lattice
+	   coordinates.  */
+	float 	scale;
 } mknoise_args;
+
+uint8_t find_format_from_path(char const *path)
+{
+	char *p = strrchr(path, '.');
+	if (p == NULL || strlen(p) < 4)
+		return NOISE_FORMAT_UNKNOWN;
+	char c1 = tolower(*(p + 1));
+	char c2 = tolower(*(p + 2));
+	char c3 = tolower(*(p + 3));
+	if (c1 == 't' && c2 == 'g' && c3 == 'a')
+		return NOISE_FORMAT_TGA;
+	else if (c1 == 'p' && c2 == 'n' && c3 == 'g')
+		return NOISE_FORMAT_PNG;
+	/*else if (c1 == 'j' && c2 == 'p' && c3 == 'g')
+		return NOISE_FORMAT_JPEG;*/
+	else
+		return NOISE_FORMAT_UNKNOWN;
+}
+
+#define EPRINT(msg){\
+	fprintf(stderr, (msg));\
+	fputc('\n', stderr);\
+}
+
+#define EPRINT_AND_EXIT(msg, ecode){\
+	EPRINT(msg);\
+	exit((ecode));\
+}
+
+void parse_options(int argc, char *argv[], mknoise_args *out)
+{
+	struct parg_state ps;
+	
+	out->scale = 4.0f;		
+
+	parg_init(&ps);
+	int c;
+	int nonoptions = 0;
+	while ((c = parg_getopt(&ps, argc, argv, "hm:s:bS:")) != -1)
+	{
+		switch (c)
+		{
+			case 1:
+				if (nonoptions == 0)
+				{
+					out->width = atoi(ps.optarg);
+				}
+				else if (nonoptions == 1)
+				{
+					out->height = atoi(ps.optarg);
+				}
+				else if (nonoptions == 2)
+				{
+					strncpy(out->outpath, ps.optarg, 0xFFF - 1);
+				}
+				nonoptions++;
+				break;
+			case 'S':
+				out->scale = (float) atof(ps.optarg);
+				if (out->scale == 0.0)
+					EPRINT_AND_EXIT("ARGS: Invalid noise scale.", -3);
+				break;
+			case 'b':
+				out->benchmark = 1;
+				break;
+			case 'm':
+				if (strcmp(ps.optarg, "fsum") == 0)
+				{
+					out->method = NOISE_METHOD_FSUM;
+				}
+				else if (strcmp(ps.optarg, "perlin") == 0)
+				{
+					out->method = NOISE_METHOD_PERLIN;					
+				}
+				else
+				{
+					fprintf(stderr, "ARGS: Unknown method value: %s\n", ps.optarg);
+					exit(-3);
+				}
+				break;
+			case 's':
+				out->seed = atoi(ps.optarg);
+				break;
+			case 'h':
+				fprintf(stdout, "Usage: mknoise [-m] [-h] WIDTH HEIGHT FILENAME\n");
+				fprintf(stdout, "       -m\tmethod flag, has options perlin ");
+				fprintf(stdout, "and fsum. fsum is a fractal sum which gives ");
+				fprintf(stdout, "a more turbulent kind of noise\n");
+				fprintf(stdout, "       -h\tprint this help\n");
+				fprintf(stdout, "       -b\trun benchmarks.\n");
+				fprintf(stdout, "       -S\tset noise frequency scale.\n");
+				exit(0);
+				break;
+			case '?':
+				exit(-2);
+			default:
+				fprintf(stderr, "ARGS: Unknown option -%c\n", c);
+				exit(-1);
+				break;
+		}
+	}
+	
+	if (out->benchmark != 1)
+	{
+		if (out->width == 0 || out->height == 0)
+		{
+			fputs("ARGS: Illegal size specified.", stderr);
+			exit(-3);
+		}
+		if (nonoptions < 3)
+		{
+			fputs("ARGS: Missing argument.", stderr);
+			exit(-2);
+		}
+	}
+	
+	out->format = find_format_from_path(out->outpath);
+}
 
 /* -----------------------------------
 	TEST FUNCTIONS. 
@@ -335,9 +479,122 @@ void benchmark()
 	ln_lattice_free(lattice);
 }
 
+int write_image_data(char const *fname, uint8_t format, int width, int height, void const *data)
+{
+	switch (format)
+	{
+		case NOISE_FORMAT_PNG:
+			stbi_write_png(fname, width, height, 3, data, width * 3 * sizeof(char));
+			break;
+		case NOISE_FORMAT_BMP:
+			stbi_write_bmp(fname, width, height, 3, data);
+			break;
+		case NOISE_FORMAT_TGA:
+			stbi_write_tga(fname, width, height, 3, data);
+			break;
+		case NOISE_FORMAT_JPEG:
+	default:
+		return 0;
+	}
+	
+	return 1;
+}
+
+inline float clamp01(float v)
+{
+    if (v < 0.0f)
+    {
+       return 0.0f;
+    }
+    else if (1.0f < v)
+    {
+        return 1.0f;
+    }
+    return v;
+}
+
+void output_noise_image(mknoise_args const *args)
+{
+	char *rgb = malloc(sizeof(char) * 3 * args->width * args->height);
+	if (rgb == NULL)
+	{
+		EPRINT_AND_EXIT("Could not allocate image buffer.", -4);
+	}
+	
+	/* Todo: Make lattice size a setting. */ 
+	ln_lattice lattice = ln_lattice_new(2, 256, NULL);
+	
+	if (lattice == NULL)
+	{
+		free(rgb);
+		EPRINT_AND_EXIT("Could not allocate noise lattice. Possibly memory error.", -4);
+	}
+	
+	ln_fsum_options fsum_opts = ln_default_fsum_options();
+	float fsumnorm = 1.0f / ln_fsum_max_value(&fsum_opts);
+	
+	for (size_t y = 0; y < args->height; ++y)
+	{
+		float fy = (float) y / ((float) args->height) * args->scale;
+		for (size_t x = 0; x < args->width; ++x)
+		{
+			size_t offset = (y * args->width + x) * 3;
+			float fx = (float) x / ((float) args->width) * args->scale;
+			float v = 0.0f;
+			if (args->method != NOISE_METHOD_FSUM)
+				v = ln_lattice_noise2d(lattice, fx, fy);
+			else
+				v = ln_lattice_fsum2d(lattice, fx, fy, &fsum_opts) * fsumnorm;
+			if (v == INFINITY)
+				EPRINT_AND_EXIT("Value with infinity detected, bug in library.", -100);
+			
+			v = clamp01(v);
+			if (v > 1.0f)
+				printf("Found value with %f\n", v);
+			
+			rgb[offset + 0] = (char) (v * 254.999f);
+			rgb[offset + 1] = (char) (v * 254.999f);
+			rgb[offset + 2] = (char) (v * 254.999f);
+		}
+	}
+	
+	if (!write_image_data(
+		args->outpath, 
+		args->format,
+		args->width,
+		args->height,
+		rgb))
+	{
+		ln_lattice_free(lattice);
+		free(rgb);
+		EPRINT_AND_EXIT("Unknown image format.", -6);
+	}
+	
+	printf("Wrote (at least) %lu pixels to %s!\n", (long unsigned) args->width * args->height, args->outpath);
+	
+	ln_lattice_free(lattice);
+	free(rgb);
+}
+
 int main(int argc, char *argv[])
 {
-	benchmark();
+	mknoise_args args;
+	parse_options(argc, argv, &args);
+	
+	if (args.benchmark == 1)
+	{
+		benchmark();		
+	}
+	else 
+	{
+		if (args.method == NOISE_METHOD_FSUM)
+			puts("Using fractal sum noise method.");
+		else
+			puts("Using perlin noise method.");
+		
+		printf("Writing %dx%d FORMAT to '%s'\n", args.width, args.height, args.outpath);
+		output_noise_image(&args);
+	}
 
 	return 0;
 }

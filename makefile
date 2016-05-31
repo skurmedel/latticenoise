@@ -1,5 +1,5 @@
 CC=gcc $(CFLAGS) 
-CFLAGS=--std=c99 -Wall
+CFLAGS=--std=c99 -Wall -Ilib/stb/ -Ilib/parg/
 
 DEBUG ?= 0
 ifeq ($(DEBUG), 1)
@@ -16,7 +16,7 @@ lib: setup
 
 exe: lib
 	$(CC) -c src/mknoise.c -o build/mknoise.o
-	$(CC) -static build/mknoise.o -o bin/mknoise -Lbin/ -llatticenoise
+	$(CC) -static build/mknoise.o lib/parg/parg.c -o bin/mknoise -Lbin/ -llatticenoise
 
 setup:
 	@mkdir -p build
