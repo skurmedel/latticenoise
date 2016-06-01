@@ -74,7 +74,7 @@ uint32_t utf8_strlen(char *str)
   return j;
 }
 
-#define NOISE_METHOD_PERLIN		0
+#define NOISE_METHOD_VALUE		0
 #define NOISE_METHOD_FSUM		1
 
 #define NOISE_FORMAT_UNKNOWN	0
@@ -195,9 +195,9 @@ void parse_options(int argc, char *argv[], mknoise_args *out)
 				{
 					out->method = NOISE_METHOD_FSUM;
 				}
-				else if (strcmp(ps.optarg, "perlin") == 0)
+				else if (strcmp(ps.optarg, "value") == 0)
 				{
-					out->method = NOISE_METHOD_PERLIN;					
+					out->method = NOISE_METHOD_VALUE;					
 				}
 				else
 				{
@@ -218,7 +218,7 @@ void parse_options(int argc, char *argv[], mknoise_args *out)
 				break;
 			case 'h':
 				fprintf(stdout, "Usage: mknoise [-m] [-h] WIDTH HEIGHT FILENAME\n");
-				fprintf(stdout, "       -m\tmethod flag, has options perlin ");
+				fprintf(stdout, "       -m\tmethod flag, has options value ");
 				fprintf(stdout, "and fsum. fsum is a fractal sum which gives ");
 				fprintf(stdout, "a more turbulent kind of noise\n");
 				fprintf(stdout, "       -h\tprint this help\n");
@@ -383,6 +383,7 @@ void output_noise_image(mknoise_args const *args)
 	}
 	
 	float fsumnorm = 1.0f / ln_fsum_max_value(&args->fsum_opts);
+	printf("Fractal sum normalizing constant = %f.\n", fsumnorm);
 	
 	for (size_t y = 0; y < args->height; ++y)
 	{
@@ -400,12 +401,14 @@ void output_noise_image(mknoise_args const *args)
 				EPRINT_AND_EXIT("Value with infinity detected, bug in library.", -100);
 			
 			v = clamp01(v);
-			if (v > 1.0f)
-				printf("Found value with %f\n", v);
+			if (v != v) 
+				printf("Found a NAN for (%0.2f, %0.2f).\n", fx, fy);
 			
 			rgb[offset + 0] = (char) (v * 254.999f);
 			rgb[offset + 1] = (char) (v * 254.999f);
 			rgb[offset + 2] = (char) (v * 254.999f);
+			//printf("n(%0.2f, %0.2f) = %f\n", fx, fy, v);
+			//printf("p(%0.2f, %0.2f) = (%03c,%03c,%03c)\n", fx, fy, rgb[offset + 0], rgb[offset + 1], rgb[offset + 2]);
 		}
 	}
 	
@@ -441,7 +444,7 @@ int main(int argc, char *argv[])
 		if (args.method == NOISE_METHOD_FSUM)
 			puts("Using fractal sum noise method.");
 		else
-			puts("Using perlin noise method.");
+			puts("Using value noise method.");
 		
 		printf("Writing %dx%d %s to '%s'\n", args.width, args.height, format_to_str(args.format), args.outpath);
 		output_noise_image(&args);

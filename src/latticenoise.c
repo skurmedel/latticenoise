@@ -37,6 +37,7 @@
 #include "latticenoise.h"
 #include <math.h>
 #include <stdlib.h>
+#include <stdio.h>
 #include <limits.h>
 
 /* For seeding the default RNG. */
@@ -207,37 +208,32 @@ float ln_lattice_value4(
 }
 
 /*
-	If x is minus, we must turn it into the "correct" offset,
-	we can't just discard the sign, for example:
-
-		x = -4
-		dim_length = 10
-
-		abs(x) = 4
-
-	But we want an infinitely repeating lattice, and if x is negative
-	it should point to element #6 in the lattice.
-
-	So we instead do:
-
-		dim_length + x = 5
-
-	If x is positive, the value will of course become bigger than 
-	dim_length, but that is no problem, we simply wrap with modulus.
-
-	We also remove the fractional part, we'll use that for interpolation
-	later on.
+	Simply takes the value modulo dim_length to ensure we are always inside the
+	lattice.
 */
-#define FLOAT_TO_OFFSET(x) (((int) lattice->dim_length) + (int) (x))
 #define WRAP(offset) ((offset) % lattice->dim_length)
 
 float ln_lattice_noise1d(ln_lattice lattice, float x)
 {
-	int ix = FLOAT_TO_OFFSET(x);
-	float r = x - (int) x;
-
-	/* Sign no longer matters. */
-	unsigned int uix = (unsigned int) ix;
+	/*
+		Map x into the lattice space.
+	*/
+	x = fmodf(fabs(x), (float) lattice->dim_length);
+	float fix; 
+	/*
+		We rip out the fractional part, we will use this for interpolation for 
+		x-coordinates between lattice points.
+		
+		We use the integer part (fix) to actually get the discrete lattice 
+		values.
+	*/
+	float r = modff(x, &fix);
+	
+	/*
+		lattice->dim_length is unsigned int, and we have already computed x 
+		module dim_length, so fix will always fit into an unsigned int.
+	*/
+	unsigned int uix = (unsigned int) fix;
 
 	float p0 = ln_lattice_value1(lattice,  WRAP(uix - 1));
 	float p1 = ln_lattice_value1(lattice,  WRAP(uix));
@@ -249,15 +245,23 @@ float ln_lattice_noise1d(ln_lattice lattice, float x)
 
 float ln_lattice_noise2d(ln_lattice lattice, float x, float y)
 {
-	int ix = FLOAT_TO_OFFSET(x);
-	int iy = FLOAT_TO_OFFSET(y);
+	/*
+		See the 1D-version for a description of this. 
+		We just do the same thing twice.
+	*/
+	x = fmodf(fabs(x), (float) lattice->dim_length);
+	y = fmodf(fabs(y), (float) lattice->dim_length);
+	float fix; float fiy;
+	float r1 = modff(x, &fix);
+	float r2 = modff(y, &fiy);
+
+	unsigned int uix = (unsigned int) fix;
+	unsigned int uiy = (unsigned int) fiy;
 	
-	float r1 = x - (int) x;
-	float r2 = y - (int) y;
-
-	unsigned int uix  = WRAP((unsigned int) ix);
-	unsigned int uiy  = WRAP((unsigned int) iy);
-
+	/*
+		Compute 4 interpolated values across x for each y-index.
+		Then interpolate along y.
+	*/	
 	float v[4] = {0, 0, 0, 0};
 
 	size_t curr = 0;
@@ -268,6 +272,7 @@ float ln_lattice_noise2d(ln_lattice lattice, float x, float y)
 		float p1 = ln_lattice_value2(lattice, WRAP(uix),      y_base);
 		float p2 = ln_lattice_value2(lattice, WRAP(uix + 1),  y_base);
 		float p3 = ln_lattice_value2(lattice, WRAP(uix + 2),  y_base);
+		
 #ifdef LN_DEFAULT_HERMITE_INTERPOLATION
 		/* 
 			We use the slope between p0, p2 and p1, p3 here as tangents.
@@ -290,11 +295,13 @@ float ln_lattice_noise2d(ln_lattice lattice, float x, float y)
 		We can actually wind up with values outside [0.0, 1.0] here so we clamp 
 		the value and hope for the best.
 	*/
+	float r = 0.0f;
 #ifdef LN_DEFAULT_HERMITE_INTERPOLATION
-	return clamp01(hermite01(v[1], (v[2] - v[0]) / 3.0f, v[2], (v[3] - v[1]) / 3.0f, r2));
+	r = clamp01(hermite01(v[1], (v[2] - v[0]) / 3.0f, v[2], (v[3] - v[1]) / 3.0f, r2));
 #else
-	return clamp01(catmull_rom(v[0], v[1], v[2], v[3], r2));
+	r = clamp01(catmull_rom(v[0], v[1], v[2], v[3], r2));
 #endif
+	return r;
 }
 
 ln_fsum_options ln_default_fsum_options()

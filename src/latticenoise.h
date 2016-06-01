@@ -33,9 +33,6 @@
 
 	This file contains various methods for generating and rendering procedural 
 	textures based on the Lattice Noise method.
-
-	It contains common functions as well as specific implementations such as 
-	Perlin Noise and Turbulence.
 */
 
 #ifndef LATTICENOISE_H
