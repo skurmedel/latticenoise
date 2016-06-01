@@ -59,112 +59,6 @@
 	}
 
 /* -----------------------------------
-	TGA FUNCTIONS. 
-   ---------------------------------*/
-typedef struct tga_data_s
-{
-	/* 
-		The image data is arranged from top left to bottom right,
-		BGRA (32 bit) or BGR (24 bit).
-
-		Thus data[0] is the blue byte of the topmost left corner.
-	*/
-	uint8_t  *data;
-	uint16_t width;
-	uint16_t height;
-	/* 24 or 32 (32 is with alpha mask.) */
-	uint8_t  bitdepth;
-} tga_data;
-
-static uint64_t tga_len(uint16_t w, uint16_t h, uint8_t bitdepth)
-{
-	uint64_t bytespp = bitdepth == 24? 3 : 4;
-	uint64_t len = ((uint32_t) w) * ((uint32_t) h) * bytespp;
-	return len;
-}
-
-// bithdepth 24 or 32
-static tga_data *tga_create(uint32_t w, uint32_t h, uint8_t bitdepth)
-{
-	if (bitdepth != 24 && bitdepth != 32)
-		return NULL;
-
-	tga_data *tga = malloc(sizeof(tga_data));
-	if (tga != NULL)
-	{
-		tga->width = w;
-		tga->height = h;
-		tga->bitdepth = bitdepth;
-
-		uint64_t len = tga_len(w, h, bitdepth);
-		tga->data = malloc(len);
-
-		if (tga->data == NULL)
-		{
-			free(tga);
-			tga = NULL;
-		}
-	}
-	return tga;
-}
-
-static void tga_free(tga_data *tga)
-{
-	if (tga != NULL)
-		free(tga->data);
-	free(tga);
-}
-
-static void tga_write(tga_data *data, FILE *f)
-{
-	/* Write the header. */
-
-	/* Identification field. */
-	/* We don't support the image identification field. */
-	putc(0, f);
-
-	/* Color map type. */
-	/* Always zero because we don't support color mapped images. */
-	putc(0, f);
-
-	/* Image type code. */
-	/* Always 2 since we only support uncompressed RGB. */
-	putc(2, f);
-
-	/*  Color map specification, not used. */
-	for (int i = 0; i < 5; i++)
-		putc(0, f);
-
-	/* X-origin. lo-hi 2 byte integer. */
-	putc(0, f); putc(0, f);
-
-	/* Y-origin. lo-hi 2 byte integer. */
-	putc(0, f); putc(0, f);
-
-	/* Image width. lo-hi 2 byte integer. */
-	putc(data->width & 0x00FF, f);
-	putc((data->width & 0xFF00) >> 8, f);
-
-	/* Image height. lo-hi 2 byte integer. */
-	putc(data->height & 0x00FF, f);
-	putc((data->height & 0xFF00) >> 8, f);
-
-	/* Image Pixel Size (amount of bits per pixel.) */
-	putc(data->bitdepth, f);
-
-	/* Image Descriptor Byte */
-	putc(0x20 | (data->bitdepth == 32? 0x08 : 0x00), f);
-
-	/* Write the image data. */
-	uint64_t len = tga_len(data->width, data->height, data->bitdepth);
-
-	for (uint64_t i = 0; i < len; ++i)
-	{
-		putc(data->data[i], f);
-	}
-}
-
-/* -----------------------------------
 	ARGUMENT PARSING.
    ---------------------------------*/
 
@@ -210,6 +104,8 @@ typedef	struct mknoise_args_s
 	/* Scale for the lattice, basically how a pixel position maps to the lattice
 	   coordinates.  */
 	float 	scale;
+	/* Iterations when doing fractal sum. */
+	ln_fsum_options fsum_opts;
 } mknoise_args;
 
 uint8_t find_format_from_path(char const *path)
@@ -230,6 +126,23 @@ uint8_t find_format_from_path(char const *path)
 		return NOISE_FORMAT_UNKNOWN;
 }
 
+char const *format_to_str(uint8_t format)
+{
+	switch (format)
+	{
+		case NOISE_FORMAT_BMP:
+			return "BMP";
+		case NOISE_FORMAT_JPEG:
+			return "JPEG";
+		case NOISE_FORMAT_PNG:
+			return "PNG";
+		case NOISE_FORMAT_TGA:
+			return "TGA";
+		default:
+			return "Unknown";	
+	}
+}
+
 #define EPRINT(msg){\
 	fprintf(stderr, (msg));\
 	fputc('\n', stderr);\
@@ -244,12 +157,13 @@ void parse_options(int argc, char *argv[], mknoise_args *out)
 {
 	struct parg_state ps;
 	
-	out->scale = 4.0f;		
+	out->scale = 4.0f;
+	out->fsum_opts = ln_default_fsum_options();
 
 	parg_init(&ps);
 	int c;
 	int nonoptions = 0;
-	while ((c = parg_getopt(&ps, argc, argv, "hm:s:bS:")) != -1)
+	while ((c = parg_getopt(&ps, argc, argv, "hm:s:bS:n:")) != -1)
 	{
 		switch (c)
 		{
@@ -294,6 +208,14 @@ void parse_options(int argc, char *argv[], mknoise_args *out)
 			case 's':
 				out->seed = atoi(ps.optarg);
 				break;
+			case 'n':
+				out->fsum_opts.n = atoi(ps.optarg);
+				if (out->fsum_opts.n < 1)
+				{
+					fprintf(stderr, "ARGS: Invalid number of iterations %d for fsum.", out->fsum_opts.n);
+					exit(-3);
+				}
+				break;
 			case 'h':
 				fprintf(stdout, "Usage: mknoise [-m] [-h] WIDTH HEIGHT FILENAME\n");
 				fprintf(stdout, "       -m\tmethod flag, has options perlin ");
@@ -302,6 +224,7 @@ void parse_options(int argc, char *argv[], mknoise_args *out)
 				fprintf(stdout, "       -h\tprint this help\n");
 				fprintf(stdout, "       -b\trun benchmarks.\n");
 				fprintf(stdout, "       -S\tset noise frequency scale.\n");
+				fprintf(stdout, "       -n\twhen using fsum method, sets the iterations\n");
 				exit(0);
 				break;
 			case '?':
@@ -333,85 +256,10 @@ void parse_options(int argc, char *argv[], mknoise_args *out)
 /* -----------------------------------
 	TEST FUNCTIONS. 
    ---------------------------------*/
-static void tga_test()
-{
-	tga_data *tga = tga_create(128, 128, 24);
-
-	uint64_t len = tga_len(tga->width, tga->height, tga->bitdepth);
-	for (uint64_t i = 0; i < len; i++)
-	{
-		uint8_t v = (i % 8) * 32;
-		tga->data[i] = v;
-	}
-
-	/* Mark upper left corner red. */
-	tga->data[0] = 0x00;
-	tga->data[1] = 0x00;
-	tga->data[2] = 0xFF;
-
-	FILE *f = fopen("test.tga", "wb");
-
-	tga_write(tga, f);
-
-	tga_free(tga);
-
-	fclose(f);
-}
-
-static void test_write_lattice(ln_lattice lattice)
-{
-	if (lattice->dimensions != 2)
-	{
-		puts("Dimensions is not 2.\n");
-		goto die_horribly;
-	}
-
-	if (lattice->dim_length > 65535)
-	{
-		puts("dim_length can't be larger than 2^16-1.\n");
-		goto die_horribly;
-	}
-
-	tga_data *tga = tga_create(lattice->dim_length, lattice->dim_length, 24);
-	if (tga == NULL)
-	{
-		puts("Memory exhausted. Good Bye.\n");
-		goto die_horribly;
-	}
-
-	uint64_t len = tga_len(tga->width, tga->height, tga->bitdepth);
-
-	for (uint64_t i = 0; i < len; i += 3)
-	{
-		uint32_t x = (i / 3) % lattice->dim_length;
-		uint32_t y = (i / 3) / lattice->dim_length;
-		float v = ln_lattice_value2(lattice, x, y);
-		if (v == INFINITY)
-			puts("BUG! We hit INFINITY!");
-		uint8_t bv = (uint8_t) (v * 255.9);
-
-		tga->data[i] = bv;
-		tga->data[i + 1] = bv;
-		tga->data[i + 2] = bv;
-	}
-
-	FILE *f = fopen("test.tga", "wb");
-
-	tga_write(tga, f);
-
-	tga_free(tga);
-
-	fclose(f);
-
-	return;
-
-die_horribly:
-	ln_lattice_free(lattice);
-	abort();
-}
 
 void benchmark()
 {
+	#if 0
 	ln_lattice lattice = ln_lattice_new(2, 128, NULL);
 	
 	tga_data *tga = tga_create(4096, 4096, 24);
@@ -477,6 +325,8 @@ void benchmark()
 	fclose(f);
 
 	ln_lattice_free(lattice);
+	#endif
+	puts("Benchmarking not implemented.");
 }
 
 int write_image_data(char const *fname, uint8_t format, int width, int height, void const *data)
@@ -530,8 +380,7 @@ void output_noise_image(mknoise_args const *args)
 		EPRINT_AND_EXIT("Could not allocate noise lattice. Possibly memory error.", -4);
 	}
 	
-	ln_fsum_options fsum_opts = ln_default_fsum_options();
-	float fsumnorm = 1.0f / ln_fsum_max_value(&fsum_opts);
+	float fsumnorm = 1.0f / ln_fsum_max_value(&args->fsum_opts);
 	
 	for (size_t y = 0; y < args->height; ++y)
 	{
@@ -544,7 +393,7 @@ void output_noise_image(mknoise_args const *args)
 			if (args->method != NOISE_METHOD_FSUM)
 				v = ln_lattice_noise2d(lattice, fx, fy);
 			else
-				v = ln_lattice_fsum2d(lattice, fx, fy, &fsum_opts) * fsumnorm;
+				v = ln_lattice_fsum2d(lattice, fx, fy, &args->fsum_opts) * fsumnorm;
 			if (v == INFINITY)
 				EPRINT_AND_EXIT("Value with infinity detected, bug in library.", -100);
 			
@@ -592,7 +441,7 @@ int main(int argc, char *argv[])
 		else
 			puts("Using perlin noise method.");
 		
-		printf("Writing %dx%d FORMAT to '%s'\n", args.width, args.height, args.outpath);
+		printf("Writing %dx%d %s to '%s'\n", args.width, args.height, format_to_str(args.format), args.outpath);
 		output_noise_image(&args);
 	}
 
