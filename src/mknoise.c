@@ -372,7 +372,9 @@ void output_noise_image(mknoise_args const *args)
 	}
 	
 	/* Todo: Make lattice size a setting. */ 
-	ln_lattice lattice = ln_lattice_new(2, 256, NULL);
+	unsigned int lattice_size = 256;
+	ln_lattice lattice = ln_lattice_new(2, lattice_size, NULL);
+	printf("Using a lattice of size %d.\n", lattice_size);
 	
 	if (lattice == NULL)
 	{
