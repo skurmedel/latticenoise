@@ -25,6 +25,36 @@ The code is standard complaint C99 code.
 Documentation
 -------------
 
+### Examples
+
+#### Simple 1D noise
+```c
+// Use a size 64 lattice for noise lookups with default PRNG.
+ln_lattice lattice = ln_lattice_new(1, 64, NULL);
+// Sample the middle of the lattice with cubic interpolation.
+float v = ln_lattice_noise1d(lattice, 0.5f * 64.0f);
+// Cleanup. 
+ln_lattice_free(lattice);
+```
+
+#### 2D Fractal Noise
+```c
+ln_lattice lattice = ln_lattice_new(2, 64, NULL);
+
+ln_fsum_options fsum_opts = ln_default_fsum_options();
+
+/*
+    Calculates a fractal noise sum and normalizes it with the analytically derived
+    maximum value.
+    
+    This way v will always be between [0.0, 1.0].
+*/
+float norm = 1.0f / ln_fsum_max_value(&fsum_opts);
+float v = ln_lattice_fsum2d(lattice, x, y, &fsum_opts) * norm;
+
+ln_lattice_free(lattice);
+```
+
 ### Creating and destroying the lattice
 
 The main object in the library is the "lattice". For simplicity the lattice is
@@ -40,7 +70,7 @@ space.
 
 To create a lattice you call:
 ```c
-extern ln_lattice ln_lattice_new(
+ln_lattice ln_lattice_new(
 	unsigned int dimensions, 
 	unsigned int dim_length, 
 	ln_rng_func_def *rng_func);
@@ -49,13 +79,13 @@ extern ln_lattice ln_lattice_new(
 `dimensions` of course specify the dimensionality of the lattice, whether it has
 only one, two or n-dimensions. `dim_length` is the amount of elements or the 
 "size" of the lattice in each direction. The amount of elements in the lattice 
-is thus dim_length raised to dimensions.
+is thus `dim_length` raised to `dimensions`.
 
 Usually you don't need a very large lattice because detail can be created with
 layering and other tricks.
 
-`rng_func` is a structure specifying a random number generator callback. If NULL
-is passed, the default C `rand` function is used.
+`rng_func` is a structure specifying a random number generator callback. If 
+`NULL` is passed, the default C `rand` function is used.
 
 When you are done with the lattice you destroy it with:
 ```c
@@ -73,7 +103,7 @@ You can access the individual values directly, but that is seldom what you want.
 You want the interpolated value and methods are provided for that purpose.
 
 Another feature with the following methods is that they wrap around, creating 
-an infinitely repeating grid. You won't ever need to worry about x causing a
+an infinitely repeating grid. You won't ever need to worry about causing a
 buffer overrun.
 
 To sample a 1D lattice you call:
@@ -91,34 +121,6 @@ These two methods result in what is usually called perlin noise.
 ### Sampling with fractal noise
 
 TBD.
-
-### Simple 1D noise
-```c
-// Use a size 64 lattice for noise lookups with default PRNG.
-ln_lattice lattice = ln_lattice_new(1, 64, NULL);
-// Sample the middle of the lattice with cubic interpolation.
-float v = ln_lattice_noise1d(lattice, 0.5f * 64.0f);
-// Cleanup. 
-ln_lattice_free(lattice);
-```
-
-### 2D Fractal Noise
-```c
-ln_lattice lattice = ln_lattice_new(2, 64, NULL);
-
-ln_fsum_options fsum_opts = ln_default_fsum_options();
-
-/*
-    Calculates a fractal noise sum and normalizes it with the analytically derived
-    maximum value.
-    
-    This way v will always be between [0.0, 1.0].
-*/
-float norm = 1.0f / ln_fsum_max_value(&fsum_opts);
-float v = ln_lattice_fsum2d(lattice, x, y, &fsum_opts) * norm;
-
-ln_lattice_free(lattice);
-```
 
 An example of some "fbm" type noise generated with the default settings for
 ln_lattice_fsum2d.
