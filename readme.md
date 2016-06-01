@@ -11,7 +11,7 @@ from it in 1D, 2D and 3D.
 
 Currently has support for:
 
-    - General perlin noise lookups in 1D and 2D.
+    - General value noise lookups in 1D and 2D.
     - Fractal sum methods for 1D and 2D.
     - Catmull-Rom or Hermite interpolation (through compiler define atm.)
     - Custom random number generators.
@@ -94,10 +94,9 @@ void ln_lattice_free(ln_lattice lattice);
 
 ### Sampling the lattice
 
-The way perlin noise and similar method works is simply by pulling values from
-this lattice using floating point coordinates, taking care to interpolate them
-appropriately. This creates smooth noise even though the lattice is inherently
-discrete.
+The way value noise works is simply by pulling values from this lattice using 
+floating point coordinates, taking care to interpolate them appropriately. This 
+creates smooth noise even though the lattice is inherently discrete.
 
 You can access the individual values directly, but that is seldom what you want.
 You want the interpolated value and methods are provided for that purpose.
@@ -116,7 +115,8 @@ The 2D version just requires an additional coordinate:
 extern float ln_lattice_noise2d(ln_lattice lattice, float x, float y);
 ``` 
 
-These two methods result in what is usually called perlin noise. 
+These two methods result in something closely resembling "Perlin noise" but 
+isn't exactly the same. 
 
 ### Sampling with fractal noise
 
